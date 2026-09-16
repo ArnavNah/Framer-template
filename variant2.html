@@ -517,29 +517,29 @@
             animation: floatRight 5s ease-in-out infinite alternate;
         }
 
-        /* Gradient Hero Button */
+        /* Hero Button - Standard Stripe Indigo / Blue */
         .btn-hero-atoks {
-            background: linear-gradient(90deg, #663cf6 20%, #ff8da4 60%, #ff9b5d 83%, #ffe999 100%);
+            background: linear-gradient(0.528turn, #635BFF 0%, #7A73FF 100%);
             color: #FFFFFF !important;
             font-weight: 700;
-            font-size: 16px;
-            padding: 16px 34px;
-            border-radius: 100px;
-            box-shadow: 0 6px 24px rgba(102, 60, 246, 0.35);
+            font-size: 15px;
+            padding: 15px 32px;
+            border-radius: var(--radius-full);
+            box-shadow: var(--shadow-stripe);
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            border: none;
+            border: 1px solid rgba(0, 0, 0, 0.08);
             cursor: pointer;
             text-decoration: none;
-            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, opacity 0.2s ease;
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
         }
         .btn-hero-atoks:hover {
-            transform: translateY(-2px) scale(1.02);
-            box-shadow: 0 10px 32px rgba(102, 60, 246, 0.5);
-            opacity: 0.96;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-stripe-hover);
         }
         .btn-hero-atoks svg {
+            stroke: #FFFFFF;
             transition: transform 0.2s ease;
         }
         .btn-hero-atoks:hover svg {
