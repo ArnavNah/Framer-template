@@ -1,0 +1,1758 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>betsmart – Your Betting Questionnaire</title>
+    <meta name="robots" content="noindex, follow">
+    <link rel="canonical" href="https://betsmart.com/alusta/">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Cloudflare Web Analytics (Beacon statt GA4) -->
+    <!-- Cloudflare Web Analytics (cookielos, ersetzt GA4) -->
+    
+<style>
+        :root {
+            --lime: #635BFF;
+            --lime-light: rgba(99, 91, 255, 0.12);
+            --lime-dark: #635BFF;
+            --lime-glow: #7A73FF;
+            --dark: #0A2540;
+            --text: #0A2540;
+            --text-secondary: #425466;
+            --bg: #F6F9FC;
+            --bg-warm: #EEF2F6;
+            --card-bg: #FFFFFF;
+            --card-border: #E6EBF1;
+            --selected-border: #635BFF;
+            --check-fill: #635BFF;
+            --shadow-sm: 0 2px 8px rgba(10, 37, 64, 0.06);
+            --shadow-md: 0 4px 20px rgba(10, 37, 64, 0.08);
+            --shadow-lg: 0 8px 40px rgba(10, 37, 64, 0.12);
+            --radius: 16px;
+            --radius-sm: 12px;
+            --radius-xs: 8px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --font: 'Outfit', Arial, sans-serif;
+            --font-body: 'Instrument Sans', Arial, sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html, body {
+            height: 100%;
+            font-family: var(--font);
+            background: #E4E6EA;
+            color: var(--text);
+            -webkit-font-smoothing: antialiased;
+            overflow: hidden;
+        }
+
+        .quiz-shell {
+            width: 100%;
+            max-width: 520px;
+            margin: 30px auto;
+            height: 100vh;
+            height: 100dvh;
+            background: var(--bg);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        @media (min-width: 560px) {
+            body { display: block; }
+            .quiz-shell {
+                height: min(calc(100vh - 60px), 860px);
+                height: min(calc(100dvh - 60px), 860px);
+                max-height: calc(100vh - 60px);
+                max-height: calc(100dvh - 60px);
+                border-radius: 24px;
+                box-shadow: var(--shadow-lg);
+            }
+        }
+
+        @media (max-width: 559px) {
+            .quiz-shell { max-width: 100%; border-radius: 0; margin: 0 auto; }
+        }
+
+        @media (max-width: 520px) {
+            .quiz-shell { max-width: 100%; }
+            .quiz-header { padding: 0; }
+            .screen { padding: 20px 20px 0; }
+            .quiz-footer { padding: 10px 20px 20px; }
+            .q-title { font-size: 22px; }
+        }
+
+        /* ===== HEADER ===== */
+        .quiz-header { padding: 0; flex-shrink: 0; position: relative; z-index: 10; }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            height: auto;
+            min-height: 52px;
+            padding: 16px 52px;
+            border-bottom: 1px solid var(--card-border);
+            background: var(--card-bg);
+        }
+
+        .btn-back {
+            position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+            width: 44px; height: 44px; border-radius: 50%;
+            border: 2px solid var(--card-border); background: var(--card-bg);
+            display: flex; align-items: center; margin-left: 16px;
+            justify-content: center; cursor: pointer;
+            transition: var(--transition); opacity: 1; flex-shrink: 0; z-index: 2;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .btn-back:hover { border-color: var(--selected-border); }
+        .btn-back.hidden { opacity: 0; pointer-events: none; }
+        .btn-back svg { display: block; }
+
+        .logo { height: 28px; max-width: 180px; overflow: hidden; }
+        .logo img { height: 100%; width: auto; display: block; max-width: 100%; object-fit: contain; }
+
+        /* ===== PROGRESS ===== */
+        .progress-section { padding: 14px 20px 12px; background: var(--card-bg); border-bottom: 1px solid var(--card-border); }
+        .progress-section.hidden { display: none; }
+
+        .progress-label {
+            text-align: center; font-size: 10px; font-weight: 700;
+            letter-spacing: 2px; text-transform: uppercase;
+            color: var(--text-secondary); margin-bottom: 10px;
+            font-family: var(--font);
+        }
+
+        .progress-steps { display: flex; align-items: center; gap: 6px; }
+
+        .progress-track {
+            flex: 1; height: 5px; background: var(--card-border); border-radius: 4px;
+            overflow: hidden; position: relative;
+        }
+
+        .progress-fill {
+            height: 100%; border-radius: 4px; background: var(--lime-dark);
+            transition: width 0.5s ease; width: 0%;
+        }
+
+        .step-dot {
+            width: 10px; height: 10px; border-radius: 50%; background: var(--card-border);
+            flex-shrink: 0; transition: var(--transition);
+        }
+        .step-dot.active, .step-dot.completed { background: var(--lime-dark); }
+
+        /* ===== BODY ===== */
+        .quiz-body { flex: 1; min-height: 0; overflow: hidden; position: relative; }
+
+        .screen {
+            position: absolute; inset: 0; padding: 20px 20px 0;
+            display: flex; flex-direction: column;
+            overflow-y: auto; overflow-x: hidden;
+            opacity: 0; pointer-events: none; will-change: transform, opacity;
+        }
+        .screen.active { opacity: 1; pointer-events: auto; }
+        .screen.enter-right { animation: enterRight 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+        .screen.exit-left { animation: exitLeft 0.35s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+        .screen.enter-left { animation: enterLeft 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+        .screen.exit-right { animation: exitRight 0.35s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+
+        @keyframes enterRight { from { transform: translateX(80px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @keyframes exitLeft { from { transform: translateX(0); opacity: 1; } to { transform: translateX(-80px); opacity: 0; } }
+        @keyframes enterLeft { from { transform: translateX(-80px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @keyframes exitRight { from { transform: translateX(0); opacity: 1; } to { transform: translateX(80px); opacity: 0; } }
+
+        /* ===== FOOTER ===== */
+        .quiz-footer { padding: 12px 24px 24px; flex-shrink: 0; position: relative; z-index: 10; background: var(--bg); }
+        .quiz-footer.hidden { display: none; }
+
+        .btn-continue {
+            width: 100%; height: 56px; border-radius: 28px; border: none;
+            background: #635BFF; color: #FFFFFF;
+            font-family: var(--font); font-size: 17px; font-weight: 800; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            transition: var(--transition);
+            box-shadow: 0 4px 20px rgba(99, 91, 255, 0.35);
+            -webkit-tap-highlight-color: transparent;
+        }
+        .btn-continue:hover { transform: translateY(-1px); box-shadow: 0 6px 28px rgba(99, 91, 255, 0.50); }
+        .btn-continue:active { transform: translateY(0); }
+        .btn-continue:disabled { background: #E1E4EB; color: #9CA3AF; cursor: not-allowed; box-shadow: none; transform: none; }
+        .btn-continue:disabled svg { opacity: 0.3; }
+
+        .skip-link {
+            display: block; text-align: center; margin-top: 12px;
+            font-size: 14px; font-weight: 600; color: var(--text-secondary);
+            cursor: pointer; transition: var(--transition);
+            background: none; border: none; font-family: var(--font); width: 100%;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .skip-link:hover { color: var(--lime-dark); }
+
+        .quiz-field-error {
+            display: none; margin-bottom: 10px; padding: 10px 14px;
+            background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 10px; color: #DC2626; font-size: 14px; font-weight: 600; text-align: center;
+            font-family: var(--font-body);
+        }
+        .quiz-field-error.visible { display: block; }
+
+        /* ===== COMMON ELEMENTS ===== */
+        .q-title {
+            font-size: 24px; font-weight: 800; text-align: center; color: var(--dark);
+            line-height: 1.3; margin-bottom: 20px; font-family: var(--font);
+        }
+        .q-subtitle {
+            font-size: 14px; color: var(--text-secondary); text-align: center;
+            margin-bottom: 18px; font-weight: 500; font-family: var(--font-body); line-height: 1.5;
+        }
+
+        /* ===== OPTION CARDS ===== */
+        .options-list { display: flex; flex-direction: column; }
+
+        .option-card {
+            display: flex; align-items: center; gap: 14px;
+            padding: 16px 18px; border: 2px solid var(--card-border);
+            border-radius: var(--radius-sm); background: var(--card-bg);
+            cursor: pointer; transition: var(--transition); margin-bottom: 10px;
+            position: relative; -webkit-tap-highlight-color: transparent;
+        }
+        .option-card:hover { border-color: #C5C9D4; }
+        .option-card.selected { border-color: var(--selected-border); background: var(--lime-light); }
+        .option-card.selected .card-check { background: #635BFF; border-color: #635BFF; }
+        .option-card.selected .card-check svg path { stroke: #FFFFFF; }
+        .option-card.selected .card-check svg { opacity: 1; }
+
+        @keyframes cardPulse { 0% { transform: scale(1); } 50% { transform: scale(1.01); } 100% { transform: scale(1); } }
+        .option-card.pulse { animation: cardPulse 0.25s ease; }
+
+        .card-icon { width: 40px; height: 40px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 22px; border-radius: 10px; background: var(--bg-warm); }
+        .card-icon-img { height: 34px; width: auto; display: block; }
+        .card-label { flex: 1; font-size: 15px; font-weight: 600; color: var(--dark); line-height: 1.4; font-family: var(--font); }
+        .card-sublabel { font-size: 12px; font-weight: 400; color: var(--text-secondary); margin-top: 2px; font-family: var(--font-body); }
+
+        .card-check {
+            width: 26px; height: 26px; border-radius: 50%; border: 2px solid #D1D5DB;
+            flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+            transition: var(--transition);
+        }
+        .card-check svg { opacity: 0; transition: var(--transition); }
+
+        /* Simple card (no check, auto-advance) */
+        .option-card.simple .card-check { display: none; }
+
+        /* 2-col grid for league screen */
+        .options-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 4px; }
+        .options-grid-2 .option-card { margin-bottom: 0; flex-direction: column; text-align: center; padding: 18px 12px; gap: 6px; }
+        .options-grid-2 .option-card .card-icon { width: 44px; height: 44px; font-size: 26px; margin: 0 auto; }
+        .options-grid-2 .option-card .card-label { font-size: 13px; text-align: center; }
+        .options-grid-2 .option-card .card-check { display: none; }
+
+        /* ===== TEXT INPUT ===== */
+        .text-input-wrap { position: relative; margin-top: 16px; }
+        .text-input {
+            width: 100%; padding: 18px 20px; border: 2px solid var(--card-border);
+            border-radius: var(--radius-sm); background: var(--card-bg);
+            font-family: var(--font); font-size: 20px; font-weight: 700; color: var(--dark);
+            transition: var(--transition); outline: none; text-align: center;
+        }
+        .text-input:focus { border-color: var(--selected-border); }
+        .text-input::placeholder { color: #9CA3AF; font-weight: 400; font-size: 16px; }
+
+        /* ===== EMAIL INPUT ===== */
+        .email-input-box {
+            margin-top: 20px; padding: 20px; border: 2px solid var(--card-border);
+            border-radius: var(--radius); background: var(--card-bg);
+            transition: border-color var(--transition);
+        }
+        .email-input-box:focus-within { border-color: var(--selected-border); }
+        .email-label { font-size: 11px; font-weight: 700; color: var(--text-secondary); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; font-family: var(--font); }
+        .email-input {
+            width: 100%; border: none; outline: none; font-family: var(--font);
+            font-size: 17px; font-weight: 600; color: var(--dark); background: transparent;
+        }
+        .email-input::placeholder { color: #9CA3AF; font-weight: 400; }
+        .email-privacy {
+            margin-top: 14px; font-size: 12px; color: var(--text-secondary); text-align: center; line-height: 1.5;
+            font-family: var(--font-body);
+        }
+        .email-privacy a { color: var(--lime-dark); text-decoration: none; }
+
+        /* ===== TRUST BADGES (email screen) ===== */
+        .trust-row { display: flex; justify-content: center; gap: 16px; margin-top: 16px; flex-wrap: wrap; }
+        .trust-badge { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--text-secondary); font-family: var(--font-body); }
+        .trust-badge span.dot { width: 6px; height: 6px; border-radius: 50%; background: var(--lime-dark); flex-shrink: 0; }
+
+        /* ===== INTERSTITIAL ===== */
+        .interstitial {
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: center; text-align: center; flex: 1; gap: 16px; padding: 20px 0;
+        }
+        .interstitial h2 {
+            font-size: 28px; font-weight: 900; color: var(--dark); line-height: 1.2;
+            font-family: var(--font);
+        }
+        .interstitial h2 span { color: var(--lime-dark); }
+        .interstitial p { font-size: 15px; color: var(--text-secondary); line-height: 1.6; max-width: 340px; font-family: var(--font-body); }
+
+        .sp-icon { font-size: 60px; margin-bottom: 4px; }
+
+        .sp-stats { display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 360px; }
+        .sp-stat-card {
+            display: flex; align-items: center; gap: 14px; padding: 14px 18px;
+            background: var(--card-bg); border-radius: var(--radius-sm);
+            border: 2px solid var(--card-border);
+        }
+        .sp-stat-icon { font-size: 24px; flex-shrink: 0; }
+        .sp-stat-body { text-align: left; }
+        .sp-stat-number { font-size: 18px; font-weight: 800; color: var(--dark); font-family: var(--font); }
+        .sp-stat-label { font-size: 12px; color: var(--text-secondary); font-family: var(--font-body); }
+
+        .hear-you-icon { font-size: 64px; margin-bottom: 4px; }
+        .hear-you-highlight {
+            display: inline-block; padding: 6px 16px; border-radius: 20px;
+            background: var(--lime-light); border: 1px solid var(--selected-border);
+            font-size: 13px; font-weight: 700; color: var(--lime-dark); font-family: var(--font);
+        }
+
+        /* ===== LOADER ===== */
+        .loader-section { display: flex; flex-direction: column; align-items: center; padding: 10px 0; width: 100%; }
+        .loader-section h2 { font-size: 22px; font-weight: 800; text-align: center; color: var(--dark); margin-bottom: 24px; font-family: var(--font); line-height: 1.3; }
+
+        .loader-bar-item { width: 100%; margin-bottom: 16px; }
+        .loader-bar-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .loader-bar-label { font-size: 13px; font-weight: 600; color: var(--text); font-family: var(--font-body); }
+        .loader-bar-pct { font-size: 13px; font-weight: 700; color: var(--lime-dark); font-family: var(--font); }
+        .loader-bar-track { height: 8px; background: var(--card-border); border-radius: 4px; overflow: hidden; }
+        .loader-bar-fill { height: 100%; background: linear-gradient(90deg, #635BFF, #00D4FF); border-radius: 4px; width: 0%; }
+
+        .loader-reviews { width: 100%; overflow: hidden; margin-top: 20px; border-radius: var(--radius); }
+        .loader-reviews-track { display: flex; transition: transform 0.5s ease; }
+        .review-card { min-width: 100%; padding: 18px; background: var(--card-bg); border: 2px solid var(--card-border); border-radius: var(--radius); }
+        .review-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+        .review-card-author { font-size: 14px; font-weight: 700; color: var(--dark); font-family: var(--font); }
+        .review-card-date { font-size: 12px; color: var(--text-secondary); margin-top: 2px; font-family: var(--font-body); }
+        .review-card-stars { font-size: 14px; color: var(--lime-dark); }
+        .review-card-text { font-size: 13px; color: var(--text-secondary); line-height: 1.6; font-style: italic; font-family: var(--font-body); }
+
+        .loader-review-dots { display: flex; justify-content: center; gap: 6px; margin-top: 12px; }
+        .loader-review-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--card-border); transition: background 0.3s; cursor: pointer; }
+        .loader-review-dot.active { background: var(--lime-dark); }
+
+        /* Loader popup */
+        .loader-popup-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 100; display: none; }
+        .loader-popup-overlay.visible { display: block; }
+        .loader-popup {
+            position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+            width: 100%; max-width: 520px; background: var(--card-bg);
+            border-radius: 24px 24px 0 0; padding: 28px 24px 44px; z-index: 101; display: none;
+            box-shadow: 0 -8px 40px rgba(0,0,0,0.15);
+        }
+        .loader-popup.visible { display: block; }
+        .loader-popup-title { font-size: 20px; font-weight: 800; color: var(--dark); text-align: center; margin-bottom: 20px; font-family: var(--font); }
+        .loader-popup-option {
+            width: 100%; padding: 14px 18px; margin-bottom: 10px;
+            border: 2px solid var(--card-border); border-radius: var(--radius-sm);
+            background: var(--card-bg); font-family: var(--font); font-size: 15px; font-weight: 600;
+            color: var(--dark); cursor: pointer; display: flex; align-items: center; gap: 12px;
+            transition: var(--transition); text-align: left; -webkit-tap-highlight-color: transparent;
+        }
+        .loader-popup-option:hover { border-color: var(--selected-border); background: var(--lime-light); }
+        .loader-popup-option span { font-size: 22px; flex-shrink: 0; }
+
+        /* ===== SUMMARY ===== */
+        .summary-hero { text-align: center; padding: 0 0 20px; }
+        .summary-hero h2 { font-size: 24px; font-weight: 900; color: var(--dark); line-height: 1.3; font-family: var(--font); }
+        .summary-name-highlight { color: var(--lime-dark); }
+
+        .summary-tip-count-box {
+            text-align: center; padding: 24px 20px; background: linear-gradient(135deg, #635BFF 0%, #7A73FF 100%); color: #FFFFFF;
+            border-radius: var(--radius); margin-bottom: 20px;
+        }
+        .summary-tip-number {
+            font-size: 64px; font-weight: 900; color: #FFFFFF;
+            font-family: var(--font); line-height: 1;
+        }
+        .summary-tip-sublabel {
+            font-size: 15px; font-weight: 600; color: rgba(255, 255, 255, 0.9);
+            margin-top: 6px; font-family: var(--font-body);
+        }
+
+        .summary-profile {
+            border: 2px solid var(--card-border); border-radius: var(--radius);
+            overflow: hidden; background: var(--card-bg); margin-bottom: 20px;
+        }
+
+        .summary-stats { padding: 0 20px; }
+        .summary-stat-row {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 14px 0; border-bottom: 1px solid var(--card-border);
+        }
+        .summary-stat-row:last-child { border-bottom: none; }
+        .summary-stat-label { font-size: 14px; color: var(--text-secondary); font-family: var(--font-body); }
+        .summary-stat-value { font-size: 14px; font-weight: 700; color: var(--dark); text-align: right; max-width: 60%; font-family: var(--font); }
+
+        /* ===== SPINNER ===== */
+        .btn-spinner {
+            width: 20px; height: 20px; border: 3px solid rgba(26,26,26,0.2);
+            border-top-color: var(--dark); border-radius: 50%; animation: spin 0.75s linear infinite; flex-shrink: 0;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ===== SCROLLBAR ===== */
+        .screen::-webkit-scrollbar { width: 4px; }
+        .screen::-webkit-scrollbar-track { background: transparent; }
+        .screen::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 2px; }
+
+        /* ===== Start-Quiz Interstitials & Animations ===== */
+        .interstitial-pro {
+            display: flex; flex-direction: column; align-items: center; text-align: center;
+            padding: 24px 16px 0; gap: 14px; opacity: 0; transform: scale(0.97);
+            animation: introScale 0.4s ease forwards;
+        }
+        @keyframes introScale { to { opacity: 1; transform: scale(1); } }
+        .interstitial-pro h2 {
+            font-size: 22px; font-weight: 800; color: var(--dark);
+            font-family: var(--font); line-height: 1.25; max-width: 340px;
+        }
+        .interstitial-pro p {
+            font-size: 15px; color: var(--text-secondary); line-height: 1.55;
+            max-width: 340px; font-family: var(--font-body);
+        }
+        .interstitial-pro .ip-icon {
+            font-size: 56px; line-height: 1;
+            animation: iconPulse 1.2s ease-in-out 0.2s 1;
+        }
+        @keyframes iconPulse {
+            0% { transform: scale(0.6); opacity: 0; }
+            60% { transform: scale(1.08); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .counter-row {
+            display: flex; gap: 24px; margin: 12px 0 4px; align-items: center;
+            justify-content: center; flex-wrap: wrap;
+        }
+        .counter-block { text-align: center; }
+        .counter-value {
+            font-size: 44px; font-weight: 900; color: var(--lime-dark);
+            font-family: var(--font); line-height: 1;
+        }
+        .counter-label {
+            font-size: 12px; font-weight: 700; color: var(--text-secondary);
+            text-transform: uppercase; letter-spacing: 1.5px; margin-top: 6px;
+            font-family: var(--font);
+        }
+        .anim-bar {
+            width: 240px; height: 8px; background: var(--card-border);
+            border-radius: 4px; overflow: hidden; margin: 10px auto 0;
+        }
+        .anim-bar-fill {
+            height: 100%; background: var(--lime-dark); width: 0%;
+            transition: width 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+            border-radius: 4px;
+        }
+
+        .schein-img-wrap {
+            width: 100%; max-width: 380px; margin: 16px auto 0;
+            border-radius: 16px; overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.10);
+            opacity: 0; transform: scale(1.02);
+            animation: scheinIn 0.5s ease-out 0.15s forwards;
+        }
+        .schein-img-wrap img { width: 100%; height: auto; display: block; }
+        @keyframes scheinIn { to { opacity: 1; transform: scale(1); } }
+
+        .sparkle-burst {
+            position: relative; width: 0; height: 0; margin: 0 auto;
+        }
+        .sparkle-burst span {
+            position: absolute; width: 6px; height: 6px; background: var(--lime-dark);
+            border-radius: 50%; left: -3px; top: -3px; opacity: 0;
+            animation: sparkleFly 0.8s ease-out 0.1s forwards;
+        }
+        .sparkle-burst span:nth-child(1) { --dx: 40px; --dy: -40px; }
+        .sparkle-burst span:nth-child(2) { --dx: -40px; --dy: -40px; }
+        .sparkle-burst span:nth-child(3) { --dx: 40px; --dy: 40px; }
+        .sparkle-burst span:nth-child(4) { --dx: -40px; --dy: 40px; }
+        @keyframes sparkleFly {
+            0%   { opacity: 0; transform: translate(0,0) scale(0); }
+            30%  { opacity: 1; }
+            100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(1); }
+        }
+
+        /* Result-A / Result-B */
+        .result-profile-line {
+            font-size: 15px; color: var(--dark); font-weight: 700;
+            background: var(--lime-light); border-left: 4px solid var(--lime-dark);
+            padding: 14px 16px; border-radius: 10px; margin: 16px 0 4px;
+            font-family: var(--font); line-height: 1.4;
+        }
+        /* Result-B – minimal alert + Telegram CTA */
+        .result-b {
+            display: flex; flex-direction: column; align-items: center; text-align: center;
+            padding: 24px 16px 0; gap: 14px;
+            opacity: 0; transform: scale(0.97);
+            animation: introScale 0.4s ease forwards;
+        }
+        .result-b-icon {
+            font-size: 64px; line-height: 1;
+            animation: alertPulse 1.5s ease-in-out infinite;
+            filter: drop-shadow(0 4px 8px rgba(245, 158, 11, 0.25));
+        }
+        @keyframes alertPulse {
+            0%, 100% { transform: scale(1); }
+            50%      { transform: scale(1.08); }
+        }
+        .result-b-headline {
+            font-size: 26px; font-weight: 900; color: var(--dark);
+            font-family: var(--font); line-height: 1.2; max-width: 340px;
+        }
+        .result-b-subheadline {
+            font-size: 15px; color: var(--text-secondary); line-height: 1.55;
+            max-width: 340px; font-family: var(--font-body);
+        }
+        .result-b-subheadline strong { color: var(--dark); font-weight: 700; }
+
+        /* Telegram-blue pulsing CTA */
+        .btn-continue.btn-telegram {
+            background: #229ED9;
+            color: #FFFFFF;
+            box-shadow: 0 4px 20px rgba(34, 158, 217, 0.40);
+            animation: telegramPulse 1.8s ease-in-out infinite;
+        }
+        .btn-continue.btn-telegram:hover {
+            background: #1d8bbf;
+            box-shadow: 0 6px 28px rgba(34, 158, 217, 0.55);
+        }
+        .btn-continue.btn-telegram svg path { stroke: #FFFFFF; }
+        @keyframes telegramPulse {
+            0%, 100% { box-shadow: 0 4px 20px rgba(34, 158, 217, 0.40), 0 0 0 0 rgba(34, 158, 217, 0.55); }
+            50%      { box-shadow: 0 4px 20px rgba(34, 158, 217, 0.50), 0 0 0 14px rgba(34, 158, 217, 0); }
+        }
+    </style>
+    <link rel="shortcut icon" type="image/x-icon" href="../assets/favic.png">
+  <!-- ── Whop Pixel (Whop Ads) ────────────────────────────────────────────────
+       Company-weiter Pixel: EIN Scope (Whop-Company biz_muuijkcV3iIH8T) für alle
+       Brands der Familie. Muss im <head> JEDER Funnel-Seite liegen.
+       ⚠ NIEMALS purchase / subscription / trial manuell tracken — Whop erfasst
+         die server-seitig aus den eigenen Payment-Daten und verwirft Duplikate. -->
+  <script>
+    !function(w,d,s,u,n,a,b){if(w[n])return;a=w[n]={q:[],t:+new Date,s:[],o:u,track:function(){a.q.push([+new Date].concat([].slice.call(arguments)))},setScope:function(){a.s=[].slice.call(arguments).filter(function(x){return typeof x==="string"});a.q.push([+new Date,"setScope"].concat(a.s))},scope:function(){var c=[].slice.call(arguments);return{track:function(){a.q.push([+new Date].concat([].slice.call(arguments)).concat([{__scope:c}]))}}}};b=d.createElement(s);b.async=1;b.src=u+"/s.js";d.getElementsByTagName(s)[0].parentNode.insertBefore(b,d.getElementsByTagName(s)[0])}(window,document,"script","https://t.whop.tw","whop");
+    whop.setScope("biz_muuijkcV3iIH8T");
+    whop.track("page");
+  </script>
+</head>
+
+<body>
+    <div class="quiz-shell">
+        <!-- Header -->
+        <div class="quiz-header">
+            <div class="header-top">
+                <button class="btn-back hidden" id="btnBack" onclick="goBack()">
+                    <span id="btnBackIcon">
+                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                            <path d="M14.25 9H3.75M3.75 9L7.5 12.75M3.75 9L7.5 5.25" stroke="#374151" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </span>
+                </button>
+                <div class="logo">
+                    <img src="../assets/img/cdn/betsmart.svg" alt="betsmart">
+                </div>
+            </div>
+            <div class="progress-section" id="progressSection">
+                <div class="progress-label" id="progressLabel">YOUR PROFILE</div>
+                <div class="progress-steps">
+                    <div class="progress-track"><div class="progress-fill" id="progFill1"></div></div>
+                    <div class="step-dot" id="stepDot1"></div>
+                    <div class="progress-track"><div class="progress-fill" id="progFill2"></div></div>
+                    <div class="step-dot" id="stepDot2"></div>
+                    <div class="progress-track"><div class="progress-fill" id="progFill3"></div></div>
+                    <div class="step-dot" id="stepDot3"></div>
+                    <div class="progress-track"><div class="progress-fill" id="progFill4"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Body – screens rendered by JS -->
+        <div class="quiz-body" id="quizBody"></div>
+
+        <!-- Footer -->
+        <div class="quiz-footer" id="quizFooter">
+            <div class="quiz-field-error" id="quizFieldError"></div>
+            <button class="btn-continue" id="btnContinue">Continue</button>
+            <button class="skip-link" id="skipLink" style="display:none">Skip</button>
+        </div>
+
+<script>
+    // ===== QUIZ STATE =====
+    const S = {
+        // Phase 1 – DEIN PROFIL
+        tip_timing: null,             // "heute" | "morgen"
+        bet_type: null,               // "einzelwetten" | "kombiwetten" | "beides"
+        sports: [],                   // nicht mehr abgefragt – bleibt für Payload-Kompatibilität
+        leagues: [],                  // nicht mehr abgefragt – bleibt für Payload-Kompatibilität
+        // Phase 2 – DEINE GEWOHNHEITEN
+        frequency: null,              // "taeglich" | "mehrmals" | "woechentlich" | "seltener"
+        bet_size: null,               // "1_5" | "5_20" | "20_50" | "50_100" | "100_plus"
+        bet_volume_target: null,      // "spass" | "50_250" | "250_1000" | "1000_3000" | "3000_plus"
+        // Phase 3 – DEINE REALITÄT
+        tried_other_groups: null,     // "ja" | "nein"
+        current_method: null,         // "bauch" | "recherche" | "plan" | "folge"
+        current_satisfaction: null,   // 1..5
+        holdback: [],                 // ["verliere","zeit",…] in Klick-Reihenfolge
+        // Mid-Loader
+        mid_quiz_fun: null,           // "love" | "sometimes" | "learning" | "frustrated"
+    };
+
+    // ===== INTEGRATION CONFIG =====
+    // Secrets (Worker URL, Airtable PAT, FB CAPI token) live ONLY in Cloudflare Worker env.
+    // Here only public IDs and the proxy URL.
+    const CONFIG = {
+        QUIZ_PROXY_URL: 'https://worker.betsmart.com',
+        FB_PIXEL_ID: '711290508343501',
+        GA_MEASUREMENT_ID: '',
+        WEBHOOK_URL: '',                          // optional direct webhook
+        AIRTABLE_PAT: '',                         // leave empty – handled by Worker
+        AIRTABLE_BASE_ID: 'appFSkT2yzEKMQ4eN',
+        AIRTABLE_TABLE_ID: 'tblP2eaBQWKj2QfA5',
+        // ⚠ V9: KEIN tg:// — statischer t.me-Link auf den underscore-freien Handle.
+        //   Der Bot ist noch nicht deployed (Master Schritt 5).
+        TELEGRAM_REDIRECT_URL: 'https://t.me/betsmartbot?start=', // user_id appended at redirect
+        QUIZ_NAME: 'start',                       // GA differentiator vs /los
+        // Daily cache-buster: Cloudinary liefert 30 Tage Browser-Cache; die Datums-Version
+        // im Pfad erzwingt einmal pro Tag einen frischen Abruf des überschriebenen Bilds.
+        TIPPSCHEIN_IMG_URL: 'https://res.cloudinary.com/dwvckwbxh/image/upload/v'
+            + new Date().toISOString().slice(0, 10).replace(/-/g, '')
+            + '/tippschein/tippschein-latest-et.png',
+        // Aus dem LIVE-Endpoint /api/tips-stats (last_30d, Stand 2026-08-23).
+        BILANZ_PLACED: 326,
+        BILANZ_WON: 182,
+        QUIZ_DEBUG_LOGS: false,
+    };
+
+    // ===== LOGGING =====
+    function quizLogEnabled() {
+        if (CONFIG.QUIZ_DEBUG_LOGS) return true;
+        return new URLSearchParams(window.location.search).get('debug') === '1';
+    }
+    function logQuiz(service, message, data) {
+        if (!quizLogEnabled()) return;
+        if (data !== undefined) console.log('[Quiz]', '[' + service + ']', message, data);
+        else console.log('[Quiz]', '[' + service + ']', message);
+    }
+
+    // ===== COOKIE PERSISTENCE =====
+    // v2: Screen-Indizes haben sich geändert (sports/leagues entfernt) – alte Cookies nicht wiederverwenden
+    const QUIZ_COOKIE_NAME = 'enn1_quiz_start_v2';
+    const QUIZ_COOKIE_DAYS = 14;
+
+    function generateUserId() {
+        return 'uid_' + Date.now().toString(36) + '_' + Math.random().toString(36).substr(2, 9);
+    }
+    function setCookie(name, value, days) {
+        const d = new Date();
+        d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
+        document.cookie = name + '=' + encodeURIComponent(value) + ';expires=' + d.toUTCString() + ';path=/;SameSite=Lax';
+    }
+    function getCookie(name) {
+        const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+        return match ? decodeURIComponent(match[2]) : null;
+    }
+    function getQuizCookie() {
+        try { const raw = getCookie(QUIZ_COOKIE_NAME); return raw ? JSON.parse(raw) : null; } catch (e) { return null; }
+    }
+    const COOKIE_KEYS = [
+        'tip_timing', 'bet_type',
+        'frequency', 'bet_size', 'bet_volume_target',
+        'tried_other_groups', 'current_method', 'current_satisfaction', 'holdback',
+        'mid_quiz_fun',
+    ];
+    function saveQuizCookie() {
+        const data = { user_id: S._user_id || generateUserId(), last_screen_idx: currentIdx };
+        COOKIE_KEYS.forEach(k => { data[k] = S[k]; });
+        S._user_id = data.user_id;
+        setCookie(QUIZ_COOKIE_NAME, JSON.stringify(data), QUIZ_COOKIE_DAYS);
+    }
+    function loadQuizCookie() {
+        const data = getQuizCookie();
+        if (!data) { S._user_id = generateUserId(); saveQuizCookie(); return false; }
+        S._user_id = data.user_id || generateUserId();
+        COOKIE_KEYS.forEach(k => { if (data[k] !== undefined && data[k] !== null) S[k] = data[k]; });
+        return typeof data.last_screen_idx === 'number' ? data.last_screen_idx : false;
+    }
+
+    // ===== SCREENS CONFIG =====
+    // Conditionals (siehe goNext() Skip-Logik):
+    //   - schein_interstitial: skipped wenn bet_type === 'einzelwetten'
+    //   - bad_experience: skipped wenn tried_other_groups !== 'ja'
+    const SCREENS = [
+        { id: 'tip_timing',          group: 1, back: false, footer: 'none' },          //  0
+        { id: 'bet_type',            group: 1, back: true,  footer: 'none' },          //  1
+        { id: 'interstitial_1',      group: 1, back: false, footer: 'continue_only' }, //  2
+        // ⚠ GEPARKT 2026-08-23: tippschein-latest-et.png liegt noch NICHT auf Cloudinary.
+        //   `disabled: true` laesst goNext() den Screen ueberspringen. Reaktivierung =
+        //   Master Schritt 5 (disabled entfernen).
+        { id: 'schein_interstitial', group: 0, back: false, footer: 'continue_only' }, //  3 (conditional, geparkt)
+        { id: 'frequency',           group: 2, back: true,  footer: 'none' },          //  4
+        { id: 'interstitial_2',      group: 2, back: false, footer: 'continue_only' }, //  5
+        { id: 'bet_size',            group: 2, back: true,  footer: 'none' },          //  6
+        { id: 'bet_volume_target',   group: 2, back: true,  footer: 'none' },          //  7
+        { id: 'tried_other_groups',  group: 3, back: true,  footer: 'none' },          //  8
+        { id: 'bad_experience',      group: 0, back: false, footer: 'continue_only' }, //  9 (conditional)
+        { id: 'current_method',      group: 3, back: true,  footer: 'none' },          // 10
+        { id: 'current_satisfaction',group: 3, back: true,  footer: 'none' },          // 11
+        { id: 'interstitial_4',      group: 3, back: false, footer: 'continue_only' }, // 12
+        { id: 'holdback',            group: 3, back: true,  footer: 'continue' },      // 13
+        { id: 'reward_interstitial', group: 0, back: false, footer: 'continue_only' }, // 14
+        { id: 'bilanz_interstitial', group: 0, back: false, footer: 'continue_only' }, // 15
+        { id: 'loader',              group: 4, back: false, footer: 'hidden' },        // 16
+        { id: 'result_a',            group: 4, back: false, footer: 'continue_only' }, // 17
+        { id: 'result_b',            group: 4, back: false, footer: 'cta_telegram' }, // 18
+    ];
+
+    const GROUP_LABELS = {
+        1: 'YOUR PROFILE',
+        2: 'YOUR HABITS',
+        3: 'YOUR SITUATION',
+        4: 'YOUR PREDICTIONS',
+    };
+    // Nur Fragen (group >0) zählen für den Progress-Sub-Step-Counter.
+    // Interstitials werden mitgezählt, wenn sie group >0 haben (interstitial_1, _2, _4, holdback).
+    const GROUP_SCREENS = {
+        1: [0, 1, 2],               // tip_timing, bet_type, interstitial_1
+        2: [4, 5, 6, 7],            // frequency, interstitial_2, bet_size, bet_volume_target
+        3: [8, 10, 11, 12, 13],     // tried_other_groups, current_method, current_satisfaction, interstitial_4, holdback
+        4: [16, 17, 18],            // loader, result_a, result_b
+    };
+
+    let currentIdx = 0;
+    let history = [];
+    let transitioning = false;
+
+    // ===== BUILD ALL SCREENS =====
+    function buildAllScreens() {
+        const body = document.getElementById('quizBody');
+        body.innerHTML = '';
+        SCREENS.forEach((scr, i) => {
+            const div = document.createElement('div');
+            div.className = 'screen' + (i === 0 ? ' active' : '');
+            div.id = 'screen_' + scr.id;
+            div.innerHTML = getScreenHTML(scr.id);
+            body.appendChild(div);
+        });
+    }
+
+    // ===== SCREEN HTML =====
+    function getScreenHTML(id) {
+        switch (id) {
+
+            case 'tip_timing': return `
+  <h2 class="q-title">Which predictions would you like to see?</h2>
+  <div class="options-list" style="margin-top:16px">
+    ${renderOptions([
+        { label: "Today's predictions", icon: '📅', value: 'heute' },
+        { label: "Tomorrow's predictions", icon: '📆', value: 'morgen' },
+    ], 'tip_timing', 'single')}
+  </div>`;
+
+            case 'bet_type': return `
+  <h2 class="q-title">What do you prefer?</h2>
+  <div class="options-list" style="margin-top:16px">
+    ${renderOptions([
+        { label: 'Single bets', icon: '🎯', value: 'einzelwetten' },
+        { label: 'Accumulator / Combo bets', icon: '🧩', value: 'kombiwetten' },
+        { label: 'Both', icon: '🔀', value: 'beides' },
+    ], 'bet_type', 'single')}
+  </div>`;
+
+            case 'tried_other_groups': return `
+  <h2 class="q-title">Have you tried another betting group before?</h2>
+  <div class="options-list" style="margin-top:16px">
+    ${renderOptions([
+        { label: 'Yes', icon: '👍', value: 'ja' },
+        { label: 'No',  icon: '👎', value: 'nein' },
+    ], 'tried_other_groups', 'single')}
+  </div>`;
+
+            case 'bad_experience': return `
+  <div class="interstitial-pro">
+    <div class="ip-icon">😟</div>
+    <h2>No worries – that's how it went for most.</h2>
+    <div class="counter-row">
+      <div class="counter-block">
+        <div class="counter-value"><span id="badExpPct">0</span>%</div>
+        <div class="counter-label">of our members</div>
+      </div>
+    </div>
+    <div class="anim-bar"><div class="anim-bar-fill" id="badExpBar"></div></div>
+    <p><strong>71% of our members previously had a bad experience with other groups.</strong> Unfortunately, there are many black sheep in this industry.<br>With us, it's different: every single bet is documented publicly in our tracked results. You don't have to take our word for it – you can verify it yourself.</p>
+  </div>`;
+
+            case 'frequency': return `
+  <h2 class="q-title">How often do you bet per week?</h2>
+  <div class="options-list" style="margin-top:8px">
+    ${renderOptions([
+        { label: 'Every day', icon: '🔥', value: 'taeglich' },
+        { label: 'A few times a week', icon: '📅', value: 'mehrmals' },
+        { label: 'Once a week', icon: '🗓️', value: 'woechentlich' },
+        { label: 'Less than once a week', icon: '⏳', value: 'seltener' },
+    ], 'frequency', 'single')}
+  </div>`;
+
+            case 'bet_size': return `
+  <h2 class="q-title">What is your typical stake per bet?</h2>
+  <div class="options-list" style="margin-top:16px">
+    ${renderOptions([
+        { label: '1–5 €', icon: '💵', value: '1_5' },
+        { label: '5–20 €', icon: '💵', value: '5_20' },
+        { label: '20–50 €', icon: '💶', value: '20_50' },
+        { label: '50–100 €', icon: '💴', value: '50_100' },
+        { label: '100 € +', icon: '💷', value: '100_plus' },
+    ], 'bet_size', 'single')}
+  </div>`;
+
+            case 'bet_volume_target': return `
+  <h2 class="q-title">If all goes well, how much do you want to make per month?</h2>
+  <div class="options-list" style="margin-top:16px">
+    ${renderOptions([
+        { label: "Just for fun – as long as I don't lose anything", icon: '🎯', value: 'spass' },
+        { label: '50–250 €', icon: '💵', value: '50_250' },
+        { label: '250–1,000 €', icon: '💰', value: '250_1000' },
+        { label: '1,000–3,000 €', icon: '🏦', value: '1000_3000' },
+        { label: 'More than 3,000 €', icon: '💥', value: '3000_plus' },
+    ], 'bet_volume_target', 'single')}
+  </div>`;
+
+            case 'current_method': return `
+  <h2 class="q-title">How do you currently place your bets?</h2>
+  <div class="options-list" style="margin-top:16px">
+    ${renderOptions([
+        { label: 'By gut feeling', icon: '🎲', value: 'bauch' },
+        { label: 'I do a bit of research before betting', icon: '🔍', value: 'recherche' },
+        { label: 'According to a set plan or strategy', icon: '📊', value: 'plan' },
+        { label: 'I follow other tipsters', icon: '👥', value: 'folge' },
+    ], 'current_method', 'single')}
+  </div>`;
+
+            case 'current_satisfaction': return `
+  <h2 class="q-title">How satisfied are you with your current results?</h2>
+  <div class="options-list" style="margin-top:16px">
+    ${renderOptions([
+        { label: 'Very dissatisfied', icon: '😤', value: '1' },
+        { label: 'Somewhat dissatisfied', icon: '😟', value: '2' },
+        { label: 'Neutral / so-so', icon: '🙂', value: '3' },
+        { label: 'Satisfied', icon: '😄', value: '4' },
+        { label: 'Very satisfied', icon: '🔥', value: '5' },
+    ], 'current_satisfaction', 'single')}
+  </div>`;
+
+            case 'holdback': return `
+  <h2 class="q-title">What's holding you back the most right now?</h2>
+  <p class="q-subtitle">You can select multiple</p>
+  <div class="options-list" style="margin-top:16px">
+    ${renderOptions([
+        { label: 'I lose too often', icon: '😩', value: 'verliere' },
+        { label: 'I do not have time for research', icon: '⏱️', value: 'zeit' },
+        { label: 'I bet impulsively after losses (tilt)', icon: '😡', value: 'impulsiv' },
+        { label: 'I do not have a clear plan', icon: '📋', value: 'kein_plan' },
+        { label: 'Nothing really – I just want higher quality picks', icon: '🎯', value: 'nichts' },
+    ], 'holdback', 'multi')}
+  </div>`;
+
+            case 'reward_interstitial': return `
+  <div class="interstitial-pro">
+    <div class="ip-icon">🌟</div>
+    <div class="sparkle-burst"><span></span><span></span><span></span><span></span></div>
+    <h2>That's exactly how it goes for <span id="rewardCounter">0</span> out of 4 of our members.</h2>
+    <p>Most people never admit it – you just did. That already puts you ahead of most.<br>Now let's get down to business.</p>
+  </div>`;
+
+            case 'interstitial_2': return `
+  <div class="interstitial-pro" id="ip2Root">
+    <div class="ip-icon" id="ip2Icon">📅</div>
+    <h2 id="ip2Headline">…</h2>
+    <p id="ip2Body">…</p>
+  </div>`;
+
+            case 'loader': return `
+  <div class="loader-section" id="loaderContent">
+    <h2>Preparing your personalized predictions …</h2>
+    <div id="loaderBars"></div>
+    <div class="loader-reviews" id="loaderReviews">
+      <div class="loader-reviews-track" id="loaderReviewsTrack">
+        <div class="review-card">
+          <div class="review-card-header">
+            <div><div class="review-card-author">Tanel K.</div><div class="review-card-date">March 12</div></div>
+            <div class="review-card-stars">★★★★★</div>
+          </div>
+          <div class="review-card-text">“Ever since I started using betsmart predictions, I finally have a working system. My win rate has noticeably improved — and now I actually understand why a bet has value.”</div>
+        </div>
+        <div class="review-card">
+          <div class="review-card-header">
+            <div><div class="review-card-author">Margus B.</div><div class="review-card-date">March 8</div></div>
+            <div class="review-card-stars">★★★★★</div>
+          </div>
+          <div class="review-card-text">“I have tried many betting channels. betsmart is the only one that is genuinely transparent — with verified results and data-driven analysis. Highly recommended!”</div>
+        </div>
+        <div class="review-card">
+          <div class="review-card-header">
+            <div><div class="review-card-author">Siim R.</div><div class="review-card-date">March 5</div></div>
+            <div class="review-card-stars">★★★★★</div>
+          </div>
+          <div class="review-card-text">“Finally, free predictions that are genuinely great. No subscriptions, no hidden tricks — just high-edge analysis every single day. My bankroll doubled in 3 months.”</div>
+        </div>
+        <div class="review-card">
+          <div class="review-card-header">
+            <div><div class="review-card-author">Rasmus M.</div><div class="review-card-date">March 1</div></div>
+            <div class="review-card-stars">★★★★★</div>
+          </div>
+          <div class="review-card-text">“The Telegram channel is pure gold. Getting top-tier value picks delivered straight to my phone on time has completely elevated my betting game.”</div>
+        </div>
+        <div class="review-card">
+          <div class="review-card-header">
+            <div><div class="review-card-author">Kadri W.</div><div class="review-card-date">Feb 25</div></div>
+            <div class="review-card-stars">★★★★★</div>
+          </div>
+          <div class="review-card-text">“As a beginner I was skeptical, but betsmart breaks everything down clearly. The analysis is easy to understand and I learned what actually counts in profitable betting.”</div>
+        </div>
+      </div>
+      <div class="loader-review-dots" id="loaderReviewDots">
+        <div class="loader-review-dot active" data-ri="0"></div>
+        <div class="loader-review-dot" data-ri="1"></div>
+        <div class="loader-review-dot" data-ri="2"></div>
+        <div class="loader-review-dot" data-ri="3"></div>
+        <div class="loader-review-dot" data-ri="4"></div>
+      </div>
+    </div>
+    <div class="loader-popup-overlay" id="loaderPopupOverlay"></div>
+    <div class="loader-popup" id="loaderPopup">
+      <h3 class="loader-popup-title">Hey, do you enjoy sports betting?</h3>
+      <button type="button" class="loader-popup-option" onclick="closeLoaderPopup('love')"><span>🔥</span> Yes, I love it!</button>
+      <button type="button" class="loader-popup-option" onclick="closeLoaderPopup('sometimes')"><span>😊</span> Sometimes, when it goes well</button>
+      <button type="button" class="loader-popup-option" onclick="closeLoaderPopup('learning')"><span>📚</span> Still learning, but it's fun</button>
+      <button type="button" class="loader-popup-option" onclick="closeLoaderPopup('frustrated')"><span>😤</span> Honestly, not going well yet</button>
+    </div>
+  </div>`;
+
+            case 'result_a': return `
+  <div class="summary-hero">
+    <h2>Your predictions are <span class="summary-name-highlight">ready!</span> ✅</h2>
+  </div>
+  <div class="summary-tip-count-box">
+    <div class="summary-tip-number" id="sumTipCount">–</div>
+    <div class="summary-tip-sublabel">predictions waiting for you</div>
+  </div>
+  <div class="summary-profile">
+    <div class="summary-stats" id="sumStats"></div>
+  </div>
+  <div class="result-profile-line" id="resultProfileLine">…</div>`;
+
+            case 'result_b': return `
+  <div class="result-b">
+    <div class="result-b-icon">⚠️</div>
+    <h2 class="result-b-headline">Confirm Your Access</h2>
+    <p class="result-b-subheadline">Tap the button below, open our Telegram bot, and press <strong>Start</strong> to claim your free predictions immediately.</p>
+  </div>`;
+
+            case 'interstitial_1': return `
+  <div class="interstitial-pro" id="ip1Root">
+    <div class="ip-icon" id="ip1Icon">🎯</div>
+    <h2 id="ip1Headline">…</h2>
+    <p id="ip1Body">…</p>
+  </div>`;
+
+            case 'interstitial_4': return `
+  <div class="interstitial-pro" id="ip4Root">
+    <div class="ip-icon" id="ip4Icon">💡</div>
+    <h2 id="ip4Headline">…</h2>
+    <div class="counter-row">
+      <div class="counter-block">
+        <div class="counter-value"><span id="ip4Pct">0</span>%</div>
+        <div class="counter-label" id="ip4Label">of all sports bettors</div>
+      </div>
+    </div>
+    <div class="anim-bar"><div class="anim-bar-fill" id="ip4Bar"></div></div>
+    <p id="ip4Body">…</p>
+  </div>`;
+
+            case 'schein_interstitial': return `
+  <div class="interstitial-pro" style="padding-bottom:24px">
+    <h2>Here is a sample ticket:</h2>
+    <div class="schein-img-wrap">
+      <img src="${CONFIG.TIPPSCHEIN_IMG_URL}" alt="Sample bet slip" loading="lazy">
+    </div>
+    <p>This is exactly the type of analysis and betting slip you receive daily from our analytical team in France directly to Telegram. 100% free. And every bet is publicly logged in our track record — so you can verify our edge yourself.</p>
+  </div>`;
+
+            case 'bilanz_interstitial': return `
+  <div class="interstitial-pro">
+    <div class="ip-icon">📊</div>
+    <h2>View our verified performance:</h2>
+    <div class="counter-row">
+      <div class="counter-block">
+        <div class="counter-value" id="bilPlaced">0</div>
+        <div class="counter-label">predictions placed</div>
+      </div>
+      <div class="counter-block">
+        <div class="counter-value" id="bilWon">0</div>
+        <div class="counter-label">won</div>
+      </div>
+    </div>
+    <div class="anim-bar"><div class="anim-bar-fill" id="bilBar"></div></div>
+    <p><strong>Past 30 days: ${CONFIG.BILANZ_PLACED} predictions placed, ${CONFIG.BILANZ_WON} won.</strong> Publicly verifiable by everyone — completely transparent, zero hidden losses.<br>Now let's finish preparing your predictions.</p>
+  </div>`;
+
+            default: return '';
+        }
+    }
+
+    // ===== RENDER HELPERS =====
+    function renderOptions(opts, variable, mode) {
+        return opts.map(o => {
+            const iconHTML = o.icon ? `<div class="card-icon">${o.icon}</div>` : '';
+            const subHTML = o.sub ? `<div class="card-sublabel">${o.sub}</div>` : '';
+            const isSimple = (mode === 'single' || mode === 'single_grid');
+            const checkHTML = isSimple ? '' : `<div class="card-check">${checkSVGInline()}</div>`;
+            return `<div class="option-card${isSimple ? ' simple' : ''}"
+    onclick="handleOption(this,'${variable}','${o.value}','${mode}')"
+    data-value="${o.value}">
+    ${iconHTML}<div class="card-label">${o.label}${subHTML}</div>${checkHTML}
+  </div>`;
+        }).join('');
+    }
+
+    function checkSVGInline() {
+        return `<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6L5 9L10 3" stroke="#1A1A1A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+    }
+    // ===== Counter-up Animation =====
+    function animateCounter(el, target, dur) {
+        if (!el) return;
+        const start = performance.now();
+        function tick(now) {
+            const t = Math.min((now - start) / dur, 1);
+            const eased = 1 - Math.pow(1 - t, 3); // easeOutCubic
+            el.textContent = Math.round(eased * target).toString();
+            if (t < 1) requestAnimationFrame(tick);
+            else el.textContent = target.toString();
+        }
+        requestAnimationFrame(tick);
+    }
+    function fillBar(el, pct) {
+        if (!el) return;
+        requestAnimationFrame(() => { el.style.width = pct + '%'; });
+    }
+
+    // ===== OPTION HANDLERS =====
+    function handleOption(el, variable, value, mode) {
+        if (transitioning) return;
+        if (mode === 'single' || mode === 'single_grid') {
+            el.parentElement.querySelectorAll('.option-card').forEach(s => s.classList.remove('selected'));
+            el.classList.add('selected', 'pulse');
+            setTimeout(() => el.classList.remove('pulse'), 300);
+            S[variable] = value;
+            setTimeout(() => goNext(), 350);
+        } else if (mode === 'single_check') {
+            el.parentElement.querySelectorAll('.option-card').forEach(s => s.classList.remove('selected'));
+            el.classList.add('selected');
+            S[variable] = value;
+            updateContinueState();
+        } else if (mode === 'multi') {
+            el.classList.toggle('selected');
+            el.classList.add('pulse');
+            setTimeout(() => el.classList.remove('pulse'), 300);
+            const selected = el.parentElement.querySelectorAll('.option-card.selected');
+            S[variable] = Array.from(selected).map(s => s.dataset.value);
+            updateContinueState();
+        }
+    }
+
+    // ===== NAVIGATION =====
+    function goNext() {
+        if (transitioning) return;
+        const validation = getRequiredValidation(SCREENS[currentIdx]);
+        if (validation.required && !validation.valid) { showQuizError(validation.message); return; }
+        hideQuizError();
+        let nextIdx = currentIdx + 1;
+        while (nextIdx < SCREENS.length && SCREENS[nextIdx].disabled) nextIdx++;
+        // Skip schein_interstitial if user picked einzelwetten
+        if (SCREENS[currentIdx].id === 'interstitial_1' && S.bet_type === 'einzelwetten') nextIdx++;
+        // Skip bad_experience if user hasn't tried other groups
+        if (SCREENS[currentIdx].id === 'tried_other_groups' && S.tried_other_groups !== 'ja') nextIdx++;
+        if (nextIdx >= SCREENS.length) return;
+        history.push(currentIdx);
+        saveQuizCookie();
+        transitionTo(nextIdx, 'forward');
+    }
+
+    function goBack() {
+        if (transitioning || history.length === 0) return;
+        hideQuizError();
+        const prevIdx = history.pop();
+        transitionTo(prevIdx, 'back');
+    }
+
+    function handleSkip() { goNext(); }
+
+    function transitionTo(idx, dir) {
+        transitioning = true;
+        const curr = document.querySelector('.screen.active');
+        const next = document.querySelectorAll('.screen')[idx];
+        if (dir === 'forward') {
+            curr.classList.add('exit-left'); curr.classList.remove('active');
+            next.classList.add('active', 'enter-right');
+        } else {
+            curr.classList.add('exit-right'); curr.classList.remove('active');
+            next.classList.add('active', 'enter-left');
+        }
+        setTimeout(() => {
+            curr.classList.remove('exit-left', 'exit-right', 'enter-left', 'enter-right');
+            next.classList.remove('enter-left', 'enter-right');
+            currentIdx = idx;
+            updateUI();
+            transitioning = false;
+            onScreenEnter(SCREENS[idx].id);
+            if (dir === 'forward' && history.length > 0) {
+                const prevScreen = SCREENS[history[history.length - 1]];
+                if (prevScreen) trackQuizStep(prevScreen.id, getAnswerForScreen(prevScreen.id));
+            }
+        }, 400);
+    }
+
+    function updateUI() {
+        const scr = SCREENS[currentIdx];
+
+        // Back button
+        const backBtn = document.getElementById('btnBack');
+        backBtn.classList.toggle('hidden', !scr.back);
+
+        // Progress
+        const progSection = document.getElementById('progressSection');
+        const progLabel = document.getElementById('progressLabel');
+        if (scr.group > 0) {
+            progSection.classList.remove('hidden');
+            progLabel.textContent = GROUP_LABELS[scr.group];
+            updateProgress(scr.group);
+        } else {
+            progSection.classList.add('hidden');
+        }
+
+        // Footer
+        const footer = document.getElementById('quizFooter');
+        const btn = document.getElementById('btnContinue');
+        const skip = document.getElementById('skipLink');
+
+        // Telegram-Pulse-Button nur auf result_b. Standardmäßig vorher entfernen.
+        btn.classList.remove('btn-telegram');
+
+        if (scr.footer === 'hidden') {
+            footer.classList.add('hidden');
+        } else {
+            footer.classList.remove('hidden');
+
+            if (scr.footer === 'none') {
+                btn.style.display = 'none'; skip.style.display = 'none';
+
+            } else if (scr.footer === 'continue_only') {
+                btn.style.display = 'flex'; btn.disabled = false;
+                btn.innerHTML = 'Continue ' + arrowSVGBtn();
+                btn.onclick = function () { goNext(); };
+                skip.style.display = 'none';
+
+            } else if (scr.footer === 'continue') {
+                btn.style.display = 'flex';
+                btn.innerHTML = 'Continue ' + arrowSVGBtn();
+                btn.onclick = function () { goNext(); };
+                skip.style.display = scr.skip ? 'block' : 'none';
+                if (scr.skip) { skip.textContent = scr.skip; skip.onclick = function () { handleSkip(); }; }
+                updateContinueState();
+
+            } else if (scr.footer === 'cta_telegram') {
+                btn.style.display = 'flex';
+                btn.classList.add('btn-telegram');
+                btn.innerHTML = 'Confirm Access on Telegram ' + arrowSVGBtn();
+                btn.disabled = false;
+                btn.onclick = function () { doClaimRedirect(); };
+                skip.style.display = 'none';
+            }
+        }
+    }
+
+    function arrowSVGBtn() {
+        return `<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3.75 9H14.25M14.25 9L10.5 5.25M14.25 9L10.5 12.75" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+    }
+
+    function updateProgress(group) {
+        const screensInGroup = GROUP_SCREENS[group];
+        const currentInGroup = screensInGroup.indexOf(currentIdx);
+        const pct = currentInGroup >= 0 ? ((currentInGroup + 1) / screensInGroup.length) * 100 : 0;
+        for (let g = 1; g <= 4; g++) {
+            const fill = document.getElementById('progFill' + g);
+            const dot = document.getElementById('stepDot' + g);
+            if (!fill || !dot) continue;
+            if (g < group) {
+                fill.style.width = '100%'; dot.className = 'step-dot completed';
+            } else if (g === group) {
+                fill.style.width = pct + '%'; dot.className = 'step-dot' + (pct >= 100 ? ' completed' : '');
+            } else {
+                fill.style.width = '0%'; dot.className = 'step-dot';
+            }
+        }
+    }
+
+    // ===== VALIDATION =====
+    const REQUIRED_SCREENS = {
+        holdback: { message: 'Please select at least one option.' },
+    };
+
+    function getRequiredValidation(scr) {
+        const req = REQUIRED_SCREENS[scr.id];
+        if (!req) return { required: false, valid: true, message: '' };
+        let valid = false;
+        switch (scr.id) {
+            case 'holdback': valid = !!(S.holdback && S.holdback.length > 0); break;
+            default: valid = true;
+        }
+        return { required: true, valid, message: req.message };
+    }
+
+    function updateContinueState() {
+        const scr = SCREENS[currentIdx];
+        const btn = document.getElementById('btnContinue');
+        const validation = getRequiredValidation(scr);
+        if (validation.valid) hideQuizError();
+        switch (scr.id) {
+            case 'holdback': btn.disabled = !(S.holdback && S.holdback.length > 0); break;
+            default: btn.disabled = false;
+        }
+    }
+
+    function showQuizError(msg) {
+        const el = document.getElementById('quizFieldError');
+        if (el) { el.textContent = msg; el.classList.add('visible'); }
+    }
+    function hideQuizError() {
+        const el = document.getElementById('quizFieldError');
+        if (el) { el.textContent = ''; el.classList.remove('visible'); }
+    }
+
+    // ===== SCREEN ENTER ACTIONS =====
+    function onScreenEnter(id) {
+        if (id === 'loader') startLoader();
+        if (id === 'result_a') populateResultA();
+        // result_b is populated in its own onScreenEnter handler (Task 17)
+        if (id === 'interstitial_1') {
+            const variants = {
+                einzelwetten: {
+                    icon: '✅',
+                    headline: 'Single bets are straightforward – a pick either hits or it does not.',
+                    body: 'That is exactly why our analytical team in France evaluates every single match with deep statistical models. Everything we release is publicly logged – you can check our performance anytime.',
+                },
+                kombiwetten: {
+                    icon: '🔗',
+                    headline: 'With parlays, just one bad selection ruins the entire ticket.',
+                    body: 'That is where most bettors slip up. We only construct combos where every individual pick has genuine statistical value – with fully transparent records.',
+                },
+                beides: {
+                    icon: '🎯',
+                    headline: 'Singles and combos – chosen wherever true market value lies.',
+                    body: 'That is how elite tipsters operate. You get both – with clear reasoning explaining why each pick makes mathematical sense.',
+                },
+            };
+            const v = variants[S.bet_type] || variants.beides;
+            const root = document.getElementById('ip1Root');
+            if (root) {
+                root.querySelector('#ip1Icon').textContent = v.icon;
+                root.querySelector('#ip1Headline').textContent = v.headline;
+                root.querySelector('#ip1Body').textContent = v.body;
+                root.style.animation = 'none';
+                requestAnimationFrame(() => { root.style.animation = ''; });
+            }
+        }
+        if (id === 'interstitial_2') {
+            const variants = {
+                taeglich: {
+                    icon: '🔥',
+                    headline: 'Betting daily – you belong to our most active members.',
+                    body: 'Daily bettors benefit the most from our picks. However, high volume without a calculated plan will slowly drain profits. That is precisely where we help.',
+                },
+                mehrmals: {
+                    icon: '📅',
+                    headline: 'The sweet spot – the rhythm with the highest long-term potential.',
+                    body: 'Often enough to stay sharp and capitalize on odds moves. Disciplined enough to avoid bored gambling. Our daily selections give you maximum edge.',
+                },
+                woechentlich: {
+                    icon: '🗓️',
+                    headline: 'Calculated and selective betting yields the highest ROI.',
+                    body: 'We never spam you with picks. You only receive a bet when the numbers truly support a major edge. Quality always beats quantity.',
+                },
+            };
+            // "seltener" shares the "woechentlich" variant
+            const key = (S.frequency === 'seltener') ? 'woechentlich' : S.frequency;
+            const v = variants[key] || variants.mehrmals;
+            const root = document.getElementById('ip2Root');
+            if (root) {
+                root.querySelector('#ip2Icon').textContent = v.icon;
+                root.querySelector('#ip2Headline').textContent = v.headline;
+                root.querySelector('#ip2Body').textContent = v.body;
+                root.style.animation = 'none';
+                requestAnimationFrame(() => { root.style.animation = ''; });
+            }
+        }
+        if (id === 'bad_experience') {
+            setTimeout(() => {
+                animateCounter(document.getElementById('badExpPct'), 71, 900);
+                fillBar(document.getElementById('badExpBar'), 71);
+            }, 200);
+        }
+        if (id === 'interstitial_4') {
+            const sat = Number(S.current_satisfaction) || 3;
+            const isPain = sat <= 2;
+            const variant = isPain ? {
+                icon: '💡',
+                headline: 'You are definitely not alone in that.',
+                pct: 60,
+                label: 'of all sports bettors',
+                body: 'Over 60% of sports bettors lose more than they win over time. It has nothing to do with bad luck – most simply place bets without an edge or structured risk management. That changes today.',
+            } : {
+                icon: '🚀',
+                headline: 'Strong – you are already outperforming 70% of other bettors.',
+                pct: 70,
+                label: 'of other bettors',
+                body: 'However, you can only analyze so many matches on your own each day. We spot massive market inefficiencies you might miss – helping you grow your bankroll consistently.',
+            };
+            const root = document.getElementById('ip4Root');
+            if (root) {
+                root.querySelector('#ip4Icon').textContent = variant.icon;
+                root.querySelector('#ip4Headline').textContent = variant.headline;
+                root.querySelector('#ip4Label').textContent = variant.label;
+                root.querySelector('#ip4Body').textContent = variant.body;
+                root.style.animation = 'none';
+                requestAnimationFrame(() => { root.style.animation = ''; });
+            }
+            setTimeout(() => {
+                animateCounter(document.getElementById('ip4Pct'), variant.pct, 900);
+                fillBar(document.getElementById('ip4Bar'), variant.pct);
+            }, 200);
+        }
+        if (id === 'holdback') {
+            const options = document.querySelectorAll('#screen_holdback .option-item');
+            options.forEach(opt => { opt.classList.toggle('selected', S.holdback && S.holdback.includes(opt.dataset.value)); });
+            updateContinueState();
+        }
+        if (id === 'reward_interstitial') {
+            setTimeout(() => animateCounter(document.getElementById('rewardCounter'), 3, 700), 250);
+        }
+        if (id === 'bilanz_interstitial') {
+            const placed = CONFIG.BILANZ_PLACED;
+            const won = CONFIG.BILANZ_WON;
+            setTimeout(() => {
+                animateCounter(document.getElementById('bilPlaced'), placed, 900);
+                animateCounter(document.getElementById('bilWon'), won, 900);
+                fillBar(document.getElementById('bilBar'), Math.round((won / placed) * 100));
+            }, 250);
+        }
+    }
+
+    // ===== LOADER =====
+    let loaderResumeAfterPopup = null;
+    let loaderReviewIdx = 0;
+    let loaderReviewTimer = null;
+
+    function rotateLoaderReview() {
+        const track = document.getElementById('loaderReviewsTrack');
+        const dots = document.querySelectorAll('.loader-review-dot');
+        if (!track) return;
+        const total = track.children.length;
+        loaderReviewIdx = (loaderReviewIdx + 1) % total;
+        track.style.transform = `translateX(-${loaderReviewIdx * 100}%)`;
+        dots.forEach((d, i) => d.classList.toggle('active', i === loaderReviewIdx));
+    }
+    function startReviewRotation() { loaderReviewIdx = 0; loaderReviewTimer = setInterval(rotateLoaderReview, 3500); }
+    function stopReviewRotation() { if (loaderReviewTimer) { clearInterval(loaderReviewTimer); loaderReviewTimer = null; } }
+
+    function startLoader() {
+        const barsContainer = document.getElementById('loaderBars');
+        const DUR = 2000;
+        const timingLabel = S.tip_timing === 'morgen' ? "Selecting tomorrow's optimal predictions"
+            : "Selecting today's optimal predictions";
+        const steps = [
+            { label: 'Analyzing your betting profile', dur: DUR },
+            { label: timingLabel, dur: DUR },
+            { label: 'Personalizing your prediction strategy', dur: DUR },
+            { label: 'Compiling your custom prediction plan', dur: DUR }
+        ];
+        barsContainer.innerHTML = steps.map((s, i) => `
+    <div class="loader-bar-item">
+      <div class="loader-bar-top">
+        <div class="loader-bar-label">${s.label}</div>
+        <div class="loader-bar-pct" id="loaderPct${i}">0%</div>
+      </div>
+      <div class="loader-bar-track"><div class="loader-bar-fill" id="loaderFill${i}"></div></div>
+    </div>`).join('');
+
+        // Worker-Call (Airtable + CAPI) parallel zum Loader, fire-and-forget mit 8s-Timeout-Race
+        (async () => {
+            const TIMEOUT = 8000;
+            const fbEventId = 'CompleteRegistration_enn1_' + (S._user_id || '') + '_' + Date.now();
+            try {
+                if (CONFIG.QUIZ_PROXY_URL && !CONFIG.QUIZ_PROXY_URL.includes('YOUR-WORKER')) {
+                    const payload = buildQuizPayload();
+                    payload.event_id = fbEventId;
+                    await Promise.race([
+                        sendToProxy('submit_email', payload),
+                        new Promise(resolve => setTimeout(resolve, TIMEOUT)),
+                    ]);
+                } else {
+                    await Promise.race([
+                        Promise.allSettled([sendWebhook(), sendToAirtable()]),
+                        new Promise(resolve => setTimeout(resolve, TIMEOUT)),
+                    ]);
+                }
+            } catch (e) {
+                logQuiz('Quiz', 'Loader-start submit error', String(e.message));
+            }
+        })();
+
+        document.getElementById('loaderPopup')?.classList.remove('visible');
+        document.getElementById('loaderPopupOverlay')?.classList.remove('visible');
+        startReviewRotation();
+
+        function runBar(idx) { return new Promise(resolve => animateBar(idx, steps[idx].dur, resolve)); }
+
+        (async function () {
+            await runBar(0);
+            await runBar(1);
+            document.getElementById('loaderPopupOverlay')?.classList.add('visible');
+            document.getElementById('loaderPopup')?.classList.add('visible');
+            loaderResumeAfterPopup = async function () {
+                document.getElementById('loaderPopupOverlay')?.classList.remove('visible');
+                document.getElementById('loaderPopup')?.classList.remove('visible');
+                await runBar(2);
+                await runBar(3);
+                stopReviewRotation();
+                setTimeout(() => goNext(), 500);
+            };
+        })();
+    }
+
+    function closeLoaderPopup(value) {
+        S.mid_quiz_fun = value;
+        saveQuizCookie();
+        if (typeof loaderResumeAfterPopup === 'function') {
+            loaderResumeAfterPopup(); loaderResumeAfterPopup = null;
+        }
+    }
+
+    function animateBar(idx, dur, onComplete) {
+        const fill = document.getElementById('loaderFill' + idx);
+        const pct = document.getElementById('loaderPct' + idx);
+        if (!fill || !pct) { if (onComplete) onComplete(); return; }
+        let start = null;
+        function step(ts) {
+            if (!start) start = ts;
+            const progress = Math.min((ts - start) / dur, 1);
+            const val = Math.round(progress * 100);
+            fill.style.width = val + '%';
+            pct.textContent = val + '%';
+            if (progress < 1) requestAnimationFrame(step);
+            else if (onComplete) onComplete();
+        }
+        requestAnimationFrame(step);
+    }
+
+    // ===== RESULT A =====
+    const RES_BET_TYPE   = { einzelwetten: 'Single Bets', kombiwetten: 'Accumulators / Combos', beides: 'Both' };
+    const RES_TIP_TIMING = { heute: "Today's Predictions", morgen: "Tomorrow's Predictions" };
+    const RES_FREQUENCY  = { taeglich: 'Daily', mehrmals: 'Multiple times a week', woechentlich: 'Once a week', seltener: 'Less than once a week' };
+    const RES_BET_SIZE   = { '1_5': '1–5 €', '5_20': '5–20 €', '20_50': '20–50 €', '50_100': '50–100 €', '100_plus': '100 € +' };
+
+    // Profile generator — 4 Q9-methods × 5 Q11-holdback options
+    const PROFILE_MAP = {
+        bauch: {
+            verliere:  'gut-feeling bettor facing a rough streak',
+            zeit:      'gut-feeling bettor with no time for research',
+            impulsiv:  'action bettor prone to chasing losses',
+            kein_plan: 'gut-feeling bettor without a structured plan',
+            nichts:    'gut-feeling bettor looking for sharper value',
+        },
+        recherche: {
+            verliere:  'analytical bettor struggling with consistency',
+            zeit:      'research bettor short on time',
+            impulsiv:  'analytical bettor prone to emotional tilt',
+            kein_plan: 'research bettor lacking a disciplined system',
+            nichts:    'analytical bettor aiming for the next level',
+        },
+        plan: {
+            verliere:  'system bettor currently in a drawdown',
+            zeit:      'system bettor needing deeper market coverage',
+            impulsiv:  'system bettor occasionally deviating from strategy',
+            kein_plan: 'disciplined bettor with strategy gaps',
+            nichts:    'system bettor seeking stronger high-yield edges',
+        },
+        folge: {
+            verliere:  'tip-follower receiving poor tipster picks',
+            zeit:      'tip-follower with zero time for manual research',
+            impulsiv:  'tip-follower hopping between channels after losses',
+            kein_plan: 'tip-follower seeking consistent direction',
+            nichts:    'tip-follower looking for verified high-yield picks',
+        },
+    };
+
+    function buildResultProfile() {
+        const m = S.current_method;
+        const h = (S.holdback && S.holdback.length > 0) ? S.holdback[0] : 'nichts';
+        if (m && PROFILE_MAP[m] && PROFILE_MAP[m][h]) return PROFILE_MAP[m][h];
+        return 'active bettor';
+    }
+
+    function populateResultA() {
+        // Tipp-Count deterministisch aus der Wett-Frequenz, clamped [10,30]
+        const freqCount = { taeglich: 24, mehrmals: 18, woechentlich: 14, seltener: 12 };
+        const tipCount = Math.max(10, Math.min(30, freqCount[S.frequency] || 16));
+        const sumTipCount = document.getElementById('sumTipCount');
+        if (sumTipCount) sumTipCount.textContent = tipCount;
+
+        const rows = [];
+        rows.push({ label: 'Predictions', value: RES_TIP_TIMING[S.tip_timing] || '–' });
+        rows.push({ label: 'Bet Type',    value: RES_BET_TYPE[S.bet_type] || '–' });
+        rows.push({ label: 'Frequency',   value: RES_FREQUENCY[S.frequency] || '–' });
+        rows.push({ label: 'Stake',       value: RES_BET_SIZE[S.bet_size]   || '–' });
+
+        const sumStats = document.getElementById('sumStats');
+        if (sumStats) {
+            sumStats.innerHTML = rows.map(r => `
+      <div class="summary-stat-row">
+        <div class="summary-stat-label">${r.label}</div>
+        <div class="summary-stat-value">${r.value}</div>
+      </div>`).join('');
+        }
+
+        const profileEl = document.getElementById('resultProfileLine');
+        if (profileEl) profileEl.textContent = 'Your Profile: ' + buildResultProfile();
+    }
+
+    // ===== REDIRECT =====
+    function doClaimRedirect() {
+        logQuiz('Quiz', 'CTA click → redirect to Telegram bot');
+        const btn = document.querySelector('#quizFooter .btn-continue');
+        if (btn) { btn.disabled = true; btn.innerHTML = '<span class="btn-spinner"></span>Redirecting …'; }
+        const redirectUrl = CONFIG.TELEGRAM_REDIRECT_URL + (S._user_id || '');
+        // Whop-Lead VOR dem tg://-Redirect (fremde App, Pixel kann dort nicht nachfeuern)
+        try { if (window.whop) whop.track('lead', { external_id: S._user_id || undefined }); } catch (e) {}
+        let redirected = false;
+        function doRedirect() { if (redirected) return; redirected = true; window.location.href = redirectUrl; }
+        try {
+            if (typeof gtag === 'function') {
+                gtag('event', 'claim_bonus_enn1', {
+                    quiz_user_id: S._user_id,
+                    method: 'telegram_redirect',
+                    position: 'result_b',
+                    quiz_name: CONFIG.QUIZ_NAME,
+                    event_callback: doRedirect,
+                    event_timeout: 1500,
+                });
+                setTimeout(doRedirect, 2000);
+            } else { doRedirect(); }
+        } catch (e) { doRedirect(); }
+    }
+
+    // ===== INTEGRATIONS =====
+    function getUrlParams() { return new URLSearchParams(window.location.search); }
+
+    function buildQuizPayload() {
+        const urlParams = getUrlParams();
+        const payload = {
+            user_id: S._user_id,
+            email: '',                          // /start collects no email
+            quiz_name: CONFIG.QUIZ_NAME,
+            tip_timing: S.tip_timing,
+            bet_type: S.bet_type,
+            online_betting: null,               // /start doesn't ask this; worker accepts null
+            tried_other_groups: S.tried_other_groups,
+            frequency: S.frequency,
+            bet_size: S.bet_size,
+            bet_volume_target: S.bet_volume_target,
+            current_method: S.current_method,
+            current_satisfaction: S.current_satisfaction,
+            mid_quiz_fun: S.mid_quiz_fun,
+            marketing_optin: false,
+            fbclid: urlParams.get('fbclid') || '',
+            utm_source: urlParams.get('utm_source') || '',
+            utm_medium: urlParams.get('utm_medium') || '',
+            utm_campaign: urlParams.get('utm_campaign') || '',
+            country: urlParams.get('country') || '',
+            page_url: window.location.href,
+            _fbp: getCookie('_fbp') || undefined,
+            _fbc: getCookie('_fbc') || undefined,
+            wuid: getCookie('_wuid') || undefined,   // ← Whop-Pixel-Cookie, Join-Key für Lead + Purchase
+        };
+        // Empty arrays must be omitted (Airtable 422 on empty multi-select)
+        if (S.sports   && S.sports.length)   payload.sports   = S.sports;
+        if (S.leagues  && S.leagues.length)  payload.leagues  = S.leagues;
+        if (S.holdback && S.holdback.length) payload.holdback = S.holdback;
+        return payload;
+    }
+
+    async function sendToProxy(action, payload, opts) {
+        if (!CONFIG.QUIZ_PROXY_URL || CONFIG.QUIZ_PROXY_URL.includes('YOUR-WORKER')) return null;
+        const body = Object.assign({ action }, payload);
+        logQuiz('Proxy', 'Sending', { action, url: CONFIG.QUIZ_PROXY_URL });
+        try {
+            const res = await fetch(CONFIG.QUIZ_PROXY_URL, {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(body), keepalive: opts && opts.keepalive,
+            });
+            const json = await res.json().catch(() => ({}));
+            logQuiz('Proxy', 'Response', { status: res.status, ok: res.ok, body: json });
+            return json;
+        } catch (e) { logQuiz('Proxy', 'Error', String(e.message)); return null; }
+    }
+
+    async function sendWebhook() {
+        if (!CONFIG.WEBHOOK_URL) { logQuiz('Webhook', 'Skip: no URL'); return; }
+        const payload = buildQuizPayload();
+        delete payload._fbp; delete payload._fbc;
+        try {
+            const res = await fetch(CONFIG.WEBHOOK_URL, {
+                method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload),
+            });
+            logQuiz('Webhook', 'Response', { status: res.status, ok: res.ok });
+        } catch (e) { logQuiz('Webhook', 'Error', String(e.message)); }
+    }
+
+    async function sendToAirtable() {
+        if (!CONFIG.AIRTABLE_PAT) { logQuiz('Airtable', 'Skip: no PAT'); return; }
+        const urlParams = getUrlParams();
+        const fields = {
+            'user_id':          S._user_id || '',
+            'URL':              window.location.href,
+            'Fbclid':           urlParams.get('fbclid') || '',
+            'Detected Country': urlParams.get('country') || '',
+            'Utm source':       urlParams.get('utm_source') || '',
+            'Utm campaign':     urlParams.get('utm_campaign') || '',
+            'Utm medium':       urlParams.get('utm_medium') || '',
+            'quiz_name':        CONFIG.QUIZ_NAME,
+            'tip_timing':       S.tip_timing || '',
+            'bet_type':         S.bet_type   || '',
+            'tried_other_groups': S.tried_other_groups || '',
+            'frequency':        S.frequency  || '',
+            'sports':           (S.sports   || []).join(', '),
+            'leagues':          (S.leagues  || []).join(', '),
+            'bet_size':         S.bet_size   || '',
+            'bet_volume_target':S.bet_volume_target || '',
+            'current_method':   S.current_method   || '',
+            'current_satisfaction': S.current_satisfaction != null ? String(S.current_satisfaction) : '',
+            'holdback':         (S.holdback || []).join(', '),
+            'mid_quiz_fun':     S.mid_quiz_fun || '',
+            'marketing_optin':  'Nein',
+        };
+        const apiUrl = 'https://api.airtable.com/v0/' + CONFIG.AIRTABLE_BASE_ID + '/' + CONFIG.AIRTABLE_TABLE_ID;
+        try {
+            const res = await fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Authorization': 'Bearer ' + CONFIG.AIRTABLE_PAT, 'Content-Type': 'application/json' },
+                body: JSON.stringify({ records: [{ fields }] }),
+            });
+            logQuiz('Airtable', 'Response', { status: res.status, ok: res.ok });
+        } catch (e) { logQuiz('Airtable', 'Error', String(e.message)); }
+    }
+
+    // ===== FACEBOOK PIXEL + CAPI =====
+    function initFacebookPixel() {
+        if (window.__fbPixelInited) return;
+        if (!CONFIG.FB_PIXEL_ID || CONFIG.FB_PIXEL_ID.includes('YOUR_')) return;
+        window.__fbPixelInited = true;
+        (function (f, b, e, v, n, t, s) {
+            if (f.fbq) return; n = f.fbq = function () { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments) };
+            if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+            n.queue = []; t = b.createElement(e); t.async = !0; t.src = v; s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s);
+        })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+        try { fbq('init', CONFIG.FB_PIXEL_ID); fbq('track', 'PageView'); } catch (e) {}
+    }
+
+    async function sha256Hex(str) {
+        const enc = new TextEncoder().encode(str);
+        const digest = await crypto.subtle.digest('SHA-256', enc);
+        return Array.from(new Uint8Array(digest)).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    function fireFBConversion(sharedEventId) {
+        // /start fires NO browser pixel CompleteRegistration event by design.
+        // CAPI fires server-side via the Worker (submit_email action).
+        // Function kept as a no-op for forward-compat.
+        return;
+    }
+
+    // ===== GA TRACKING =====
+    function getAnswerForScreen(id) {
+        switch (id) {
+            case 'tip_timing':           return S.tip_timing || '';
+            case 'bet_type':             return S.bet_type || '';
+            case 'frequency':            return S.frequency || '';
+            case 'bet_size':             return S.bet_size || '';
+            case 'bet_volume_target':    return S.bet_volume_target || '';
+            case 'tried_other_groups':   return S.tried_other_groups || '';
+            case 'current_method':       return S.current_method || '';
+            case 'current_satisfaction': return S.current_satisfaction != null ? String(S.current_satisfaction) : '';
+            case 'holdback':             return (S.holdback || []).join(', ');
+            default:                     return '';
+        }
+    }
+
+    function trackQuizStep(screenId, answer) {
+        if (typeof gtag !== 'function') return;
+        gtag('event', 'quiz_step_enn1', {
+            quiz_user_id: S._user_id,
+            quiz_name: CONFIG.QUIZ_NAME,
+            step_name: screenId,
+            step_answer: typeof answer !== 'undefined' ? answer : '',
+            step_index: currentIdx,
+        });
+    }
+
+    // ===== INIT =====
+    document.addEventListener('DOMContentLoaded', () => {
+        const savedIdx = loadQuizCookie();
+
+        if (typeof gtag === 'function' && S._user_id) {
+            gtag('config', CONFIG.GA_MEASUREMENT_ID, { user_id: S._user_id });
+        }
+
+        initFacebookPixel();
+        buildAllScreens();
+
+        // Debug: ?screen=screen_id jumps to that screen
+        const debugScreen = new URLSearchParams(window.location.search).get('screen');
+        if (debugScreen) {
+            const targetIdx = SCREENS.findIndex(s => s.id === debugScreen);
+            if (targetIdx >= 0) {
+                document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+                document.querySelectorAll('.screen')[targetIdx].classList.add('active');
+                currentIdx = targetIdx;
+                setTimeout(() => onScreenEnter(debugScreen), 200);
+            }
+        } else if (typeof savedIdx === 'number' && savedIdx > 0 && savedIdx < SCREENS.length) {
+            // Resume at last saved screen (skip loader/result screens — those re-trigger their side-effects).
+            const terminalIds = new Set(['loader', 'result_a', 'result_b']);
+            const resumeIdx = terminalIds.has(SCREENS[savedIdx].id) ? 0 : savedIdx;
+            if (resumeIdx > 0) {
+                document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+                document.querySelectorAll('.screen')[resumeIdx].classList.add('active');
+                currentIdx = resumeIdx;
+                // Reconstruct minimal history so back-button works (one step back to start).
+                history.push(0);
+                setTimeout(() => onScreenEnter(SCREENS[resumeIdx].id), 200);
+            }
+        }
+
+        updateUI();
+    });
+</script>
+
+
+</body>
+</html>

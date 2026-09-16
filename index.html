@@ -1,0 +1,1692 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>BETSMART: Bet on knowledge, not luck</title>
+    <meta name="description" content="Expert sports predictions daily. 130,000+ users trust betsmart. Data-driven, transparent, always fresh.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="canonical" href="https://betsmart.com/">
+
+    <link rel="shortcut icon" type="image/x-icon" href="./assets/favic.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Phudu:wght@600;700&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+
+    <!-- Cloudflare Web Analytics (Beacon statt GA4) -->
+    <!-- Cloudflare Web Analytics (cookielos, ersetzt GA4) -->
+    
+<style>
+        /* ==========================================================
+           betsmart - Home v2 (self-contained, keine Vendor-Abhaengigkeiten)
+           ========================================================== */
+        :root {
+            --stripe-indigo: #635BFF;
+            --stripe-light:  #7A73FF;
+            --stripe-glow:   #9C96FF;
+            --stripe-deep:   #4E44E6;
+            --stripe-cyan:   #00D4FF;
+            --stripe-pink:   #FF5E97;
+            --stripe-surface:#F4F5FF;
+            --lime:          #635BFF;
+            --lime-light:    #7A73FF;
+            --lime-deep:     #4E44E6;
+            --bg:            #F6F9FC;
+            --ink:           #0A2540;
+            --ink-soft:      #425466;
+            --ink-faint:     #687385;
+            --card:          #FFFFFF;
+            --line:          #E6EBF1;
+            --star:          #FFD04F;
+            --radius:        16px;
+            --radius-lg:     24px;
+            --shadow-sm:     0 2px 14px rgba(10, 37, 64, 0.06);
+            --shadow-md:     0 8px 30px rgba(10, 37, 64, 0.09);
+            --shadow-lime:   0 6px 22px rgba(99, 91, 255, 0.35);
+            --font-display:  'Phudu', sans-serif;
+            --font-body:     'Instrument Sans', system-ui, sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-body);
+            background: var(--bg);
+            color: var(--ink);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+        img { max-width: 100%; display: block; }
+        a { color: inherit; text-decoration: none; }
+        ul { list-style: none; }
+
+        .container { max-width: 1230px; margin: 0 auto; padding: 0 20px; }
+        .container-wide { max-width: 1430px; margin: 0 auto; padding: 0 20px; }
+
+        /* ── Typografie ── */
+        .display {
+            font-family: var(--font-display);
+            font-weight: 700;
+            text-transform: uppercase;
+            line-height: 1.05;
+            letter-spacing: -1px;
+        }
+        .section-title { font-size: clamp(38px, 6vw, 70px); }
+        .eyebrow {
+            display: inline-block;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            color: var(--ink);
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 100px;
+            padding: 6px 16px;
+            margin-bottom: 18px;
+        }
+        .section-head { text-align: center; margin-bottom: 56px; }
+        .section-head p { color: var(--ink-soft); margin-top: 14px; font-size: 1.05rem; }
+
+        /* ── Buttons ── */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(0.528turn, #635BFF 0%, #7A73FF 100%);
+            color: #FFFFFF;
+            font-weight: 700;
+            font-size: 15px;
+            border-radius: 100px;
+            padding: 16px 30px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: 0 4px 18px rgba(99, 91, 255, 0.35);
+            transition: transform .25s ease, box-shadow .25s ease;
+        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 26px rgba(99, 91, 255, 0.5); }
+        .btn svg { stroke: #FFFFFF; }
+        .btn .btn-icon { border-right: 1px solid rgba(255, 255, 255, 0.3); }
+        .btn svg { flex-shrink: 0; }
+        .btn .btn-icon {
+            display: inline-flex;
+            padding-right: 12px;
+            border-right: 1px solid rgba(0, 0, 0, 0.2);
+        }
+        .btn-sm { padding: 11px 22px; font-size: 14px; }
+
+        /* ── Reveal-Animationen (nur mit JS aktiv) ── */
+        html.js .reveal { opacity: 0; transform: translateY(36px); transition: opacity .7s ease, transform .7s ease; }
+        html.js .reveal.in { opacity: 1; transform: none; }
+        /* Hinweis: Wir schalten die Bänder bei "Bewegung reduzieren" bewusst NICHT ab.
+           Eingefroren würden sie nur den ersten Ausschnitt zeigen und den Rest der
+           Screenshots/Reviews unter overflow:hidden verstecken – Inhalt ginge verloren.
+           Marquees pausieren weiterhin bei Hover; die Bewegung ist langsam und sanft. */
+
+        /* ==========================================================
+           ANNOUNCEMENT + NAV
+           ========================================================== */
+        .announcement {
+            background: linear-gradient(90deg, #635BFF 0%, #4E44E6 100%);
+            color: #FFFFFF;
+            padding: 10px 44px;
+            position: relative;
+            text-align: center;
+            font-size: 14px;
+        }
+        .announcement b {
+            background: rgba(255, 255, 255, 0.25);
+            color: #FFFFFF;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            border-radius: 100px;
+            padding: 3px 10px;
+            margin-right: 10px;
+            letter-spacing: 0.04em;
+        }
+        .announcement a { font-weight: 700; text-decoration: underline; text-underline-offset: 2px; margin-left: 8px; white-space: nowrap; display: inline-flex; align-items: center; gap: 5px; vertical-align: middle; color: #FFFFFF; }
+        .announcement-close {
+            position: absolute;
+            right: 14px; top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            color: #FFFFFF;
+            border: none;
+            width: 26px; height: 26px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: inline-flex; align-items: center; justify-content: center;
+            line-height: 1;
+            color: var(--ink);
+        }
+
+        .site-header { position: sticky; top: 0; z-index: 100; padding: 18px 0; }
+        .nav-pill {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border-radius: 100px;
+            padding: 14px 26px;
+        }
+        .nav-pill .logo img { height: 28px; width: auto; }   /* 11-Zeichen-Wortmarke: Breiten-Clamp statt Hoehe */
+
+        /* ==========================================================
+           HERO
+           ========================================================== */
+        .hero {
+            position: relative;
+            background: url('./assets/img/stadium-bg.jpg') center top / cover no-repeat;
+            padding: 70px 0 0;
+            overflow: hidden;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            left: 0; right: 0; bottom: 0;
+            height: 45%;
+            background: linear-gradient(to bottom, transparent, var(--bg));
+            pointer-events: none;
+        }
+        .hero-grid {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            align-items: center;
+            gap: 30px;
+        }
+        .hero-title { font-size: clamp(44px, 7.2vw, 92px); letter-spacing: -2px; }
+        .hero-copy { max-width: 360px; color: var(--ink-soft); margin-top: 26px; font-size: 1.02rem; }
+        .hero-cta-row { display: flex; align-items: center; gap: 28px; margin-top: 34px; flex-wrap: wrap; }
+        .hero-phone { position: relative; text-align: center; }
+        .hero-phone::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: min(70vw, 560px); height: min(70vw, 560px);
+            background: radial-gradient(circle, rgba(99,91,255,0.45) 0%, rgba(0,212,255,0.25) 45%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .hero-phone img { position: relative; margin: 0 auto; max-height: 620px; width: auto; }
+
+        /* ── Rating-Band (Lime Mesh + Glass-Card) ── */
+        .rating-band {
+            position: relative;
+            z-index: 2;
+            border-radius: 24px;
+            margin: -40px 0 0;
+            padding: 64px 56px;
+            overflow: hidden;
+            background:
+                radial-gradient(ellipse at 10% 60%, rgba(99, 91, 255, 0.95) 0%, transparent 55%),
+                radial-gradient(ellipse at 55% 25%, rgba(0, 212, 255, 0.8) 0%, transparent 50%),
+                radial-gradient(ellipse at 85% 75%, rgba(122, 115, 255, 0.8) 0%, transparent 50%),
+                radial-gradient(ellipse at 40% 80%, rgba(255, 94, 151, 0.45) 0%, transparent 45%),
+                #635BFF;
+            color: #FFFFFF;
+        }
+        .rating-band::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('./assets/img/abstract-pattern.svg') right -40px top -20px / 420px auto no-repeat;
+            opacity: 0.18;
+            pointer-events: none;
+        }
+        .rating-card {
+            position: relative;
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            color: #FFFFFF;
+            border-radius: 20px;
+            padding: 26px 30px;
+        }
+        .rating-card .label { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
+        .rating-row { display: flex; align-items: center; gap: 14px; margin-top: 8px; }
+        .rating-score { font-family: var(--font-display); font-size: 52px; font-weight: 700; line-height: 1; }
+        .rating-stars { display: flex; gap: 3px; }
+        .avatar-row { display: flex; align-items: center; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
+        .avatars { display: flex; }
+        .avatar {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            border: 2.5px solid rgba(255,255,255,0.9);
+            margin-left: -10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 12px; font-weight: 700; color: #fff;
+            object-fit: cover;
+            background: #d8d8d8;
+        }
+        .avatar:first-child { margin-left: 0; }
+        .avatar-count { background: var(--ink); font-size: 9px; }
+        .avatar-text { font-size: 0.85rem; line-height: 1.4; font-weight: 500; }
+
+        /* ==========================================================
+           LIGA-LOGOS (Endlos-Slider wie im Original)
+           ========================================================== */
+        .leagues { padding: 70px 0 80px; }
+        .league-viewport { position: relative; overflow: hidden; max-width: 1030px; margin: 0 auto; }
+        .league-viewport::before, .league-viewport::after {
+            content: '';
+            position: absolute;
+            top: 0; bottom: 0;
+            width: 80px;
+            z-index: 2;
+            pointer-events: none;
+        }
+        .league-viewport::before { left: 0; background: linear-gradient(to right, var(--bg) 20%, transparent); }
+        .league-viewport::after { right: 0; background: linear-gradient(to left, var(--bg) 20%, transparent); }
+        .league-track {
+            display: flex;
+            align-items: center;
+            width: max-content;
+            animation: slideLeft 28s linear infinite;
+        }
+        .league-track img {
+            height: 48px; width: auto;
+            object-fit: contain;
+            margin: 0 clamp(24px, 3.5vw, 45px);
+            filter: grayscale(100%);
+            opacity: 0.7;
+            transition: filter .3s ease, opacity .3s ease;
+        }
+        .league-track img:hover { filter: none; opacity: 1; }
+
+        /* ==========================================================
+           FEATURES
+           ========================================================== */
+        .features { padding: 30px 0 90px; }
+        /* Asymmetrisches Bento: 1 großes Feature-Feld links, 2 kompakte rechts */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 20px;
+        }
+        .feature-card {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+            padding: 34px 32px;
+            display: flex;
+            flex-direction: column;
+        }
+        .feature-lg {
+            grid-row: span 2;
+            border-color: rgba(99, 91, 255, 0.25);
+            justify-content: space-between;
+            background:
+                radial-gradient(ellipse at 12% 12%, rgba(99, 91, 255, 0.22) 0%, transparent 52%),
+                radial-gradient(ellipse at 85% 85%, rgba(0, 212, 255, 0.15) 0%, transparent 50%),
+                linear-gradient(158deg, rgba(244, 245, 255, 0.9) 0%, rgba(255, 255, 255, 0.95) 62%);
+        }
+        .feature-card .icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 54px; height: 54px;
+            border-radius: 12px;
+            background: #635BFF;
+            color: #FFFFFF;
+            margin-bottom: 20px;
+        }
+        .feature-lg .icon { width: 60px; height: 60px; box-shadow: var(--shadow-lime); }
+        .feature-card h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 10px; letter-spacing: -0.02em; }
+        .feature-lg h3 { font-size: clamp(1.5rem, 2.4vw, 1.9rem); line-height: 1.15; }
+        .feature-card p { color: var(--ink-soft); font-size: 0.95rem; }
+        .feature-lg p { color: var(--ink-soft); font-size: 1rem; max-width: 34ch; }
+        .feature-stat {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            margin-top: 28px;
+            padding-top: 22px;
+            border-top: 1px solid rgba(99, 91, 255, 0.2);
+        }
+        .feature-stat .num {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 2.6rem;
+            line-height: 1;
+            letter-spacing: -1px;
+        }
+        .feature-stat span:last-child { font-size: 0.85rem; color: var(--ink-soft); line-height: 1.35; }
+        .feature-note { text-align: center; margin-top: 36px; color: var(--ink-soft); }
+        .feature-note b {
+            background: #635BFF;
+            color: #FFFFFF !important;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            border-radius: 100px;
+            padding: 3px 10px;
+            margin-right: 8px;
+        }
+        .feature-note a { font-weight: 700; text-decoration: underline; }
+
+        /* ==========================================================
+           SO FUNKTIONIERT'S - Sticky Stack + CSS-Phone-Mockups
+           ========================================================== */
+        .steps { padding: 60px 0 40px; }
+        .step-panel {
+            position: sticky;
+            top: 90px;
+            border-radius: var(--radius-lg);
+            background: var(--card);
+            box-shadow: var(--shadow-md);
+            padding: clamp(36px, 5vw, 80px);
+            margin-bottom: 40px;
+            overflow: hidden;
+        }
+        .step-panel-2 { background: linear-gradient(265deg, rgba(99,91,255,0.08) 0%, rgba(0,212,255,0.12) 100%), #fff; }
+        .step-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+        .step-label {
+            display: inline-block;
+            font-size: 15px;
+            font-weight: 600;
+            padding: 2px 16px;
+            border-radius: 40px;
+            border: 1px solid rgba(33, 33, 45, 0.08);
+            background: rgba(255, 255, 255, 0.6);
+            color: var(--ink);
+            margin-bottom: 25px;
+        }
+        /* Ghost-Nummer wie im Original: riesig, Gradient-Wasserzeichen */
+        .step-number {
+            font-family: var(--font-display);
+            font-size: clamp(120px, 15vw, 220px);
+            font-weight: 700;
+            line-height: 0.6;
+            margin-bottom: 30px;
+            background: linear-gradient(180deg, rgba(33, 33, 45, 0.14) 13.2%, rgba(247, 247, 253, 0.1) 94.29%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .step-panel h3 {
+            font-family: var(--font-display);
+            text-transform: uppercase;
+            font-size: clamp(38px, 3.5vw, 44px);
+            font-weight: 700;
+            letter-spacing: -1px;
+            line-height: 1.08;
+            margin-bottom: 15px;
+        }
+        .step-panel .step-text { color: var(--ink-soft); max-width: 420px; }
+        .step-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 22px; font-weight: 700; border-bottom: 2px solid var(--lime); padding-bottom: 2px; }
+        .step-link svg { transition: transform .25s ease; }
+        .step-link:hover svg { transform: translateX(4px); }
+
+        /* ── CSS-Phone (ersetzt die gerenderten Mockup-Bilder) ── */
+        .phone-stage { position: relative; display: flex; justify-content: center; padding: 10px 0; }
+        .phone-stage::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 380px; height: 380px;
+            background: radial-gradient(circle, rgba(99,91,255,0.38) 0%, rgba(0,212,255,0.18) 50%, transparent 70%);
+            border-radius: 50%;
+        }
+        .phone-shape { position: absolute; width: 90px; pointer-events: none; }
+        .shape-ball { bottom: 4%; left: 6%; transform: rotate(-12deg); }
+        .shape-bolt { top: 3%; right: 5%; width: 74px; transform: rotate(10deg); }
+        .phone {
+            position: relative;
+            width: 300px;
+            background: linear-gradient(150deg, #34363a 0%, #16171a 46%, #202226 100%);
+            border-radius: 48px;
+            padding: 10px;
+            box-shadow: 0 42px 80px -24px rgba(0, 0, 0, 0.5), 0 0 0 2px #050506, inset 0 0 0 5px #1a1b1d;
+            transform: rotate(-4deg);
+        }
+        .step-panel:nth-child(even) .phone { transform: rotate(3.5deg); }
+        /* Seitentasten */
+        .phone::before, .phone::after { content: ''; position: absolute; background: #0b0c0d; border-radius: 3px; }
+        .phone::before { left: -3px; top: 132px; width: 3px; height: 52px; }
+        .phone::after  { right: -3px; top: 150px; width: 3px; height: 68px; }
+        .phone-screen {
+            position: relative;
+            background: #fff;
+            border-radius: 39px;
+            overflow: hidden;
+            min-height: 545px;
+            display: flex;
+            flex-direction: column;
+            font-size: 13px;
+        }
+        .phone-island {
+            position: absolute;
+            top: 11px; left: 50%;
+            transform: translateX(-50%);
+            width: 82px; height: 21px;
+            background: #050506;
+            border-radius: 100px;
+            z-index: 5;
+        }
+        /* iOS-Statusleiste */
+        .status-bar {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 13px 22px 7px;
+            font-size: 12.5px; font-weight: 700; color: var(--ink);
+        }
+        .status-icons { display: flex; align-items: center; gap: 5px; }
+        .status-icons svg { display: block; }
+        /* App-Topbar */
+        .app-topbar {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 4px 16px 11px;
+            border-bottom: 1px solid var(--line);
+        }
+        .app-topbar .brand { font-family: var(--font-display); font-weight: 700; font-size: 17px; letter-spacing: -0.5px; }
+        .app-topbar .topbar-ico {
+            width: 30px; height: 30px; border-radius: 50%;
+            background: #F1F2F4;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--ink-soft);
+        }
+        /* Screen-Inhalt */
+        .screen-body { flex: 1; padding: 14px 16px 16px; display: flex; flex-direction: column; }
+        /* Bottom-Tab-Bar */
+        .tab-bar {
+            display: flex;
+            border-top: 1px solid var(--line);
+            padding: 8px 4px 11px;
+            background: #fff;
+            margin-top: auto;
+        }
+        .tab-bar .tab {
+            flex: 1;
+            display: flex; flex-direction: column; align-items: center; gap: 3px;
+            font-size: 8.5px; font-weight: 600; color: #B4B8BE;
+        }
+        .tab-bar .tab svg { width: 21px; height: 21px; }
+        .tab-bar .tab.on { color: var(--ink); }
+        .tab-bar .tab.on svg { color: #635BFF; }
+        .phone-h { text-align: center; font-weight: 700; font-size: 14px; margin-bottom: 14px; letter-spacing: -0.01em; }
+        .phone-search {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            background: #F1F2F4;
+            border-radius: 10px;
+            color: var(--ink-faint);
+            padding: 9px 12px;
+            font-size: 12px;
+            margin-bottom: 12px;
+        }
+        .phone-search svg { flex-shrink: 0; }
+        .phone-list { display: flex; flex-direction: column; gap: 8px; }
+        .phone-li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 10px 12px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+        }
+        .phone-li img { width: 26px; height: 26px; object-fit: contain; }
+        .phone-li .t { flex: 1; line-height: 1.25; }
+        .phone-li .t b { display: block; font-size: 12.5px; }
+        .phone-li .t span { font-size: 10.5px; color: var(--ink-faint); }
+        .phone-check {
+            width: 20px; height: 20px;
+            border-radius: 6px;
+            border: 1.5px solid #C9CDD3;
+            flex-shrink: 0;
+        }
+        .phone-check.on {
+            background: #635BFF;
+            border-color: #4E44E6;
+            position: relative;
+        }
+        .phone-check.on::after {
+            content: '';
+            position: absolute;
+            inset: 4px 5px 6px;
+            border-left: 2.5px solid #FFFFFF;
+            border-bottom: 2.5px solid #FFFFFF;
+            transform: rotate(-45deg);
+        }
+        .phone-footnote { text-align: center; font-size: 11px; color: var(--ink-faint); margin-top: 12px; text-transform: uppercase; letter-spacing: 0.05em; }
+        .phone-btn {
+            background: #635BFF;
+            color: #FFFFFF !important;
+            font-weight: 700;
+            text-align: center;
+            border-radius: 100px;
+            padding: 12px;
+            margin-top: 10px;
+            font-size: 13px;
+            box-shadow: 0 3px 12px rgba(99, 91, 255, 0.4);
+        }
+        /* Formular (Schritt 2) */
+        .phone-field { margin-bottom: 10px; }
+        .phone-field label { display: block; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-faint); margin-bottom: 4px; }
+        .phone-field div {
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            padding: 9px 12px;
+            font-size: 13px;
+            background: #fff;
+        }
+        .phone-consent { display: flex; gap: 8px; font-size: 10.5px; color: var(--ink-soft); line-height: 1.45; margin: 12px 0 4px; }
+        .phone-consent .phone-check { width: 16px; height: 16px; margin-top: 1px; }
+        .phone-consent .phone-check.on::after { inset: 3px 4px 5px; border-width: 0 0 2px 2px; border-style: solid; border-color: #FFFFFF; }
+        .phone-perks { display: flex; justify-content: center; gap: 14px; font-size: 9.5px; color: var(--ink-soft); margin-top: 10px; }
+        .phone-perks span { display: inline-flex; align-items: center; gap: 4px; }
+        .phone-perks svg { flex-shrink: 0; }
+        /* Tipp-Karten (Schritt 3) */
+        .tip-card {
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 8px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+            background: #fff;
+        }
+        .tip-card .match { font-weight: 700; font-size: 12.5px; }
+        .tip-card .meta { font-size: 10.5px; color: var(--ink-faint); margin: 2px 0 8px; }
+        .tip-card .pick {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #F4F5FF;
+            border: 1px solid rgba(99, 91, 255, 0.25);
+            border-radius: 8px;
+            padding: 7px 10px;
+            font-size: 11.5px;
+        }
+        .tip-card .pick b { font-size: 12px; }
+        .tip-chip {
+            background: #635BFF;
+            color: #FFFFFF !important;
+            font-size: 9px;
+            font-weight: 800;
+            text-transform: uppercase;
+            padding: 3px 8px;
+            border-radius: 100px;
+            letter-spacing: 0.04em;
+        }
+        .phone-push {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            background: rgba(27, 28, 30, 0.92);
+            color: #fff;
+            border-radius: 14px;
+            padding: 10px 12px;
+            margin-bottom: 14px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+        }
+        .phone-push .app-ico {
+            width: 30px; height: 30px;
+            border-radius: 8px;
+            background: #635BFF;
+            color: #FFFFFF !important;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 12px;
+            flex-shrink: 0;
+        }
+        .phone-push b { display: block; font-size: 11.5px; }
+        .phone-push span { font-size: 10.5px; opacity: 0.85; }
+
+        /* ==========================================================
+           SCHEIN VOM VORTAG (Promo-Block)
+           ========================================================== */
+        .slip-promo { padding: 40px 0 100px; overflow: hidden; }
+        .slip-promo-box {
+            position: relative;
+            display: grid;
+            grid-template-columns: 0.9fr 1.1fr;
+            align-items: center;
+            gap: clamp(30px, 6vw, 80px);
+            background: var(--ink);
+            color: #fff;
+            border-radius: 28px;
+            padding: clamp(40px, 5vw, 72px);
+            overflow: hidden;
+        }
+        .slip-promo-box::before {
+            content: '';
+            position: absolute; top: -30%; right: -8%;
+            width: 480px; height: 480px;
+            background: radial-gradient(circle, rgba(99,91,255,0.3) 0%, rgba(0,212,255,0.15) 50%, transparent 68%);
+            pointer-events: none;
+        }
+        .slip-stage { display: flex; justify-content: center; position: relative; z-index: 1; }
+        .slip-frame { position: relative; display: inline-block; transform: rotate(-2.5deg); }
+        .slip-frame::before {
+            content: '';
+            position: absolute; inset: -12% -16%;
+            background: radial-gradient(ellipse at center, rgba(99,91,255,0.6) 0%, rgba(0,212,255,0.2) 45%, transparent 72%);
+            filter: blur(12px);
+            z-index: -1;
+        }
+        .slip-frame img {
+            width: 100%; max-width: 300px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.10);
+            box-shadow: 0 34px 70px -22px rgba(0,0,0,0.6);
+            background: var(--slip, #1b1c1e);
+            aspect-ratio: 750 / 1198;
+            object-fit: cover;
+            object-position: top;
+        }
+        .slip-date-badge {
+            position: absolute; top: -15px; left: -12px;
+            background: #635BFF; color: #FFFFFF !important;
+            font-weight: 800; font-size: 12px; letter-spacing: 0.02em;
+            border-radius: 100px; padding: 9px 16px;
+            box-shadow: 0 8px 20px rgba(99,91,255,0.5);
+            transform: rotate(5deg);
+            display: flex; align-items: center; gap: 7px;
+            z-index: 2;
+        }
+        .slip-date-badge svg { stroke: #FFFFFF !important; }
+        .slip-date-badge svg { flex-shrink: 0; }
+        .slip-copy { position: relative; z-index: 1; }
+        .slip-copy .kicker { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #7A73FF; margin-bottom: 14px; }
+        .slip-copy h2 { font-family: var(--font-display); text-transform: uppercase; font-size: clamp(32px, 4.4vw, 56px); letter-spacing: -1px; line-height: 1.05; margin-bottom: 18px; }
+        .slip-copy p { color: rgba(255,255,255,0.66); font-size: 1.05rem; max-width: 46ch; margin-bottom: 26px; }
+        .slip-copy .btn svg { stroke: var(--ink); }
+
+        /* ==========================================================
+           PROOF WALL + REVIEW MARQUEE
+           ========================================================== */
+        .proof { padding: 90px 0 20px; overflow: hidden; }
+        .proof-viewport, .marquee-viewport { position: relative; overflow: hidden; }
+        .proof-viewport::before, .proof-viewport::after,
+        .marquee-viewport::before, .marquee-viewport::after {
+            content: '';
+            position: absolute;
+            top: 0; bottom: 0;
+            width: 100px;
+            z-index: 2;
+            pointer-events: none;
+        }
+        .proof-viewport::before, .marquee-viewport::before { left: 0; background: linear-gradient(to right, var(--bg) 20%, transparent); }
+        .proof-viewport::after, .marquee-viewport::after { right: 0; background: linear-gradient(to left, var(--bg) 20%, transparent); }
+
+        .proof-track { display: flex; padding: 14px 0 48px; animation: slideLeft 170s linear infinite; width: max-content; }
+        .proof-track:hover { animation-play-state: paused; }
+        .proof-track img {
+            height: 260px; width: auto;
+            border-radius: 16px;
+            margin: 0 8px;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            box-shadow: 0 2px 16px rgba(0,0,0,0.10), 0 8px 32px rgba(0,0,0,0.07);
+            transition: transform .3s ease, box-shadow .3s ease;
+            cursor: zoom-in;
+        }
+        .proof-track img:nth-child(odd)  { transform: rotate(-1.8deg); }
+        .proof-track img:nth-child(even) { transform: rotate(1.2deg); }
+        .proof-track img:hover { transform: scale(1.05) translateY(-6px); box-shadow: 0 12px 40px rgba(0,0,0,0.18); }
+
+        /* ── Lightbox: Screenshot per Klick groß öffnen ── */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            background: rgba(9, 12, 5, 0.88);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            opacity: 0;
+            transition: opacity .25s ease;
+            cursor: zoom-out;
+        }
+        .lightbox.open { display: flex; opacity: 1; }
+        .lightbox img {
+            max-width: min(92vw, 440px);
+            max-height: 86vh;
+            width: auto;
+            border-radius: 22px;
+            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.55);
+            transform: scale(0.94);
+            transition: transform .3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .lightbox.open img { transform: scale(1); }
+        .lightbox-close {
+            position: absolute;
+            top: 18px; right: 20px;
+            width: 46px; height: 46px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: background .2s ease;
+        }
+        .lightbox-close:hover { background: rgba(255, 255, 255, 0.28); }
+        @media (prefers-reduced-motion: reduce) {
+            .lightbox, .lightbox img { transition: none; }
+        }
+
+        .reviews { padding: 60px 0 100px; }
+        .marquee-viewport { margin-bottom: 16px; }
+        .marquee-track { display: flex; width: max-content; animation: slideLeft 75s linear infinite; }
+        .marquee-track:hover { animation-play-state: paused; }
+        .marquee-reverse .marquee-track { animation-name: slideRight; }
+        @keyframes slideLeft  { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+        @keyframes slideRight { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+
+        .review-card {
+            width: 340px;
+            min-height: 200px;
+            margin: 0 10px;
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            transition: border-color .3s ease, box-shadow .3s ease;
+        }
+        .review-card:hover { border-color: #b0b0b0; box-shadow: 0 6px 16px rgba(0,0,0,0.07); }
+        .review-card img.stars { height: 16px; width: auto; margin-bottom: 12px; }
+        .review-card h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 7px; letter-spacing: -0.02em; }
+        .review-card p { color: var(--ink-soft); font-size: 0.87rem; line-height: 1.55; flex-grow: 1; }
+        .review-who { display: flex; align-items: center; gap: 10px; border-top: 1px solid var(--line); padding-top: 12px; margin-top: 12px; }
+        .review-who .ini {
+            width: 32px; height: 32px;
+            background: #f3f3f3;
+            border: 1px solid var(--line);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 0.78rem; color: #444;
+            flex-shrink: 0;
+        }
+        .review-who b { font-size: 0.82rem; font-weight: 600; display: block; }
+        .review-who span { font-size: 0.7rem; color: var(--ink-faint); }
+
+        /* ==========================================================
+           FAQ
+           ========================================================== */
+        .faq { position: relative; padding: 120px 0; overflow: hidden; }
+        .faq::before {
+            content: '?';
+            position: absolute;
+            top: -40px; left: -60px;
+            font-family: var(--font-display);
+            font-size: 520px;
+            font-weight: 700;
+            line-height: 1;
+            color: rgba(99, 91, 255, 0.15);
+            opacity: 1;
+            filter: blur(8px);
+            transform: rotate(-18deg);
+            pointer-events: none;
+        }
+        .faq-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 60px; position: relative; }
+        .faq details {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            margin-bottom: 12px;
+            overflow: hidden;
+        }
+        .faq summary {
+            list-style: none;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            font-weight: 600;
+            font-size: 1.02rem;
+            padding: 20px 24px;
+        }
+        .faq summary::-webkit-details-marker { display: none; }
+        .faq summary::after {
+            content: '+';
+            font-size: 22px;
+            font-weight: 400;
+            width: 30px; height: 30px;
+            border-radius: 50%;
+            background: #EEF0FF;
+            color: #635BFF;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+            transition: transform .3s ease;
+        }
+        .faq details[open] summary::after { transform: rotate(45deg); }
+        .faq details p { padding: 0 24px 22px; color: var(--ink-soft); font-size: 0.95rem; }
+
+        /* ==========================================================
+           CTA
+           ========================================================== */
+        .cta { padding: 0 0 40px; }
+        .cta-box {
+            position: relative;
+            border-radius: 28px;
+            overflow: hidden;
+            background:
+                radial-gradient(ellipse at 15% 25%, rgba(99, 91, 255, 0.95) 0%, transparent 55%),
+                radial-gradient(ellipse at 78% 82%, rgba(0, 212, 255, 0.8) 0%, transparent 55%),
+                radial-gradient(ellipse at 50% 90%, rgba(255, 94, 151, 0.4) 0%, transparent 50%),
+                #635BFF;
+            color: #FFFFFF;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 30px;
+            padding: clamp(44px, 6vw, 76px) clamp(28px, 5vw, 64px);
+        }
+        .cta-box::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('./assets/img/abstract-pattern.svg') left -60px bottom -40px / 380px auto no-repeat;
+            opacity: 0.14;
+            pointer-events: none;
+        }
+        .cta-copy { position: relative; }
+        .cta-box h2 { color: #FFFFFF !important; }
+        .cta-box p { color: rgba(255, 255, 255, 0.9) !important; }
+        .cta-copy .btn { margin-top: 30px; background: #FFFFFF; color: #635BFF; box-shadow: 0 8px 26px rgba(0,0,0,0.3); }
+        .cta-copy .btn:hover { box-shadow: 0 12px 32px rgba(0,0,0,0.4); }
+        .cta-copy .btn svg { stroke: #635BFF; }
+        .cta-phone { position: relative; display: flex; justify-content: center; }
+        .cta-phone .phone { transform: rotate(3deg); width: 290px; }
+        .phone-tabs { display: flex; background: #F1F2F4; border-radius: 100px; padding: 4px; margin-bottom: 14px; font-size: 12px; font-weight: 600; text-align: center; }
+        .phone-tabs span { flex: 1; padding: 7px 4px; border-radius: 100px; color: var(--ink-faint); }
+        .phone-tabs .on { background: #fff; color: #635BFF; font-weight: 700; box-shadow: 0 1px 5px rgba(0,0,0,0.1); }
+
+        /* ==========================================================
+           FOOTER
+           ========================================================== */
+        footer { padding: 60px 0 40px; }
+        .footer-top {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            margin-bottom: 36px;
+        }
+        .footer-brand img { height: 32px; width: auto; margin-bottom: 10px; }
+        .footer-brand p { color: rgba(0,0,0,0.45); font-size: 0.85rem; }
+        .footer-links { display: flex; gap: 32px; }
+        .footer-links a { color: rgba(0,0,0,0.5); font-size: 0.85rem; transition: color .2s; }
+        .footer-links a:hover { color: rgba(0,0,0,0.9); }
+        .footer-legal {
+            border-top: 1px solid rgba(0,0,0,0.1);
+            padding-top: 24px;
+            color: rgba(0,0,0,0.35);
+            font-size: 0.75rem;
+            text-align: center;
+        }
+
+        /* ==========================================================
+           RESPONSIVE
+           ========================================================== */
+        @media (max-width: 991px) {
+            .hero-grid, .step-grid, .faq-grid, .cta-box { grid-template-columns: 1fr; }
+            .feature-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+            .feature-lg { grid-row: auto; }
+            .hero { padding-top: 40px; }
+            .hero-phone img { max-height: 46vh; }
+            .rating-band { padding: 44px 28px; margin-top: 0; }
+            /* Mobile: kein Sticky-Stack (verdeckt die Handys), sondern normale Karten */
+            .step-panel { position: static; top: auto; margin-bottom: 20px; }
+            .step-grid { gap: 8px; }
+            .step-grid .phone-stage { order: 2; }
+            .faq-grid { gap: 20px; }
+            .faq::before { font-size: 320px; }
+            .cta-phone .phone { transform: rotate(0); }
+            .slip-promo-box { grid-template-columns: 1fr; gap: 44px; text-align: center; }
+            .slip-copy p { margin-left: auto; margin-right: auto; }
+            .slip-frame img { max-width: 250px; }
+        }
+        @media (max-width: 767px) {
+            /* Header wie im Original: nur Logo, zentriert, kein Button */
+            .nav-pill { justify-content: center; padding: 12px 16px; }
+            .nav-pill .btn { display: none; }
+            .nav-pill .logo img { height: 28px; width: auto; }
+            .site-header { position: static; }
+            .hero-title { font-size: clamp(38px, 11vw, 60px); }
+            .hero-copy { display: none; }
+            .hero-phone { margin-top: 28px; }
+            .hero-phone img { max-height: 44vh; }
+        }
+        @media (max-width: 600px) {
+            .announcement { font-size: 12.5px; text-align: left; }
+            .announcement a { display: none; }
+            .proof-track img { height: 200px; }
+            .review-card { width: 290px; }
+            .phone { width: 260px; }
+            .phone-screen { min-height: 470px; }
+        }
+    </style>
+
+    <!-- Organization-Schema (SEO-Fundament 2026-08-08): eine Entität pro
+         Brand-Domain, damit Google Name/Logo/Kanal als Knowledge-Signal
+         zusammenführt. Bewusst KEIN AggregateRating über die eigene Marke. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "betsmart",
+      "url": "https://betsmart.com/",
+      "logo": "https://betsmart.com/assets/img/cdn/betsmart.svg",
+      "sameAs": ["https://t.me/betsmartbot"],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer support",
+        "email": "info@betsmart.com",
+        "availableLanguage": "et"
+      }
+    }
+    </script>
+</head>
+
+<body>
+
+    <!-- ============================================================
+         ANNOUNCEMENT BAR
+    ============================================================ -->
+    <div class="announcement" id="announcement">
+        <b>NEW</b> France's #1 sports tipster team, now available in English.
+        <a href="./alusta/">View predictions
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17L17 7M17 7H8M17 7V16" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <button class="announcement-close" type="button" aria-label="Close" onclick="document.getElementById('announcement').style.display='none'">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+        </button>
+    </div>
+
+    <!-- ============================================================
+         NAVIGATION
+    ============================================================ -->
+    <header class="site-header">
+        <div class="container-wide">
+            <div class="nav-pill">
+                <a class="logo" href="./">
+                    <img src="./assets/img/cdn/betsmart.svg" alt="BETSMART">
+                </a>
+                <a class="btn btn-sm" href="./alusta/">View predictions</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- ============================================================
+             HERO
+        ============================================================ -->
+        <section class="hero">
+            <div class="container-wide">
+                <div class="hero-grid">
+                    <div>
+                        <h1 class="display hero-title">Bet on knowledge,<br>not luck.</h1>
+                        <div class="hero-cta-row">
+                            <div>
+                                <a class="btn" href="./alusta/">
+                                    <span class="btn-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                            <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </span>
+                                    View predictions
+                                </a>
+                            </div>
+                            <p class="hero-copy">Our analysts break down the biggest matches every day, so you bet on data, not luck.</p>
+                        </div>
+                    </div>
+                    <div class="hero-phone">
+                        <img src="./assets/img/hero-hand.webp" alt="betsmart app with winning combo bets">
+                    </div>
+                </div>
+
+                <!-- Rating-Band -->
+                <div class="rating-band">
+                    <div class="rating-card">
+                        <span class="label">User Rating</span>
+                        <div class="rating-row">
+                            <span class="rating-score">4,8</span>
+                            <span class="rating-stars">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 15 15" fill="none"><path d="M7.36067 0.5L9.63512 5.10778L14.7213 5.85121L11.041 9.43586L11.9096 14.5L7.36067 12.1078L2.81178 14.5L3.68034 9.43586L0 5.85121L5.08623 5.10778L7.36067 0.5Z" fill="#FFD04F"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 15 15" fill="none"><path d="M7.36067 0.5L9.63512 5.10778L14.7213 5.85121L11.041 9.43586L11.9096 14.5L7.36067 12.1078L2.81178 14.5L3.68034 9.43586L0 5.85121L5.08623 5.10778L7.36067 0.5Z" fill="#FFD04F"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 15 15" fill="none"><path d="M7.36067 0.5L9.63512 5.10778L14.7213 5.85121L11.041 9.43586L11.9096 14.5L7.36067 12.1078L2.81178 14.5L3.68034 9.43586L0 5.85121L5.08623 5.10778L7.36067 0.5Z" fill="#FFD04F"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 15 15" fill="none"><path d="M7.36067 0.5L9.63512 5.10778L14.7213 5.85121L11.041 9.43586L11.9096 14.5L7.36067 12.1078L2.81178 14.5L3.68034 9.43586L0 5.85121L5.08623 5.10778L7.36067 0.5Z" fill="#FFD04F"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 15 15" fill="none"><path d="M7.36067 0.5L9.63512 5.10778L14.7213 5.85121L11.041 9.43586L11.9096 14.5L7.36067 12.1078L2.81178 14.5L3.68034 9.43586L0 5.85121L5.08623 5.10778L7.36067 0.5Z" fill="#FFD04F"/></svg>
+                            </span>
+                        </div>
+                        <div class="avatar-row">
+                            <span class="avatars">
+                                <img class="avatar" src="./assets/img/avatars/av-11.jpg" alt="" loading="lazy">
+                                <img class="avatar" src="./assets/img/avatars/av-32.jpg" alt="" loading="lazy">
+                                <img class="avatar" src="./assets/img/avatars/av-53.jpg" alt="" loading="lazy">
+                                <img class="avatar" src="./assets/img/avatars/av-64.jpg" alt="" loading="lazy">
+                                <span class="avatar avatar-count">+130k</span>
+                            </span>
+                            <span class="avatar-text">130,000+ users trust our<br>expert predictions daily</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             LIGA-LOGOS
+        ============================================================ -->
+        <section class="leagues">
+            <div class="container">
+                <div class="league-viewport">
+                    <div class="league-track" data-clone>
+                        <img src="./assets/img/leagues/bundesliga.png" alt="Bundesliga">
+                        <img src="./assets/img/leagues/premier-league.png" alt="Premier League">
+                        <img src="./assets/img/leagues/laliga.png" alt="La Liga">
+                        <img src="./assets/img/leagues/serie-a.png" alt="Serie A">
+                        <img src="./assets/img/leagues/ligue1.png" alt="Ligue 1">
+                        <img src="./assets/img/leagues/champions-league.png" alt="Champions League">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             FEATURES
+        ============================================================ -->
+        <section class="features">
+            <div class="container">
+                <div class="section-head reveal">
+                    <h2 class="display section-title">Everything a successful<br>bettor needs</h2>
+                    <p>Data-driven predictions, complete transparency, clear recommendations.</p>
+                </div>
+                <div class="feature-grid">
+                    <div class="feature-card feature-lg reveal">
+                        <div>
+                            <span class="icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="28" viewBox="0 0 28 26" fill="none">
+                                    <rect x="0" y="12" width="5" height="14" rx="1.5" fill="currentColor"/>
+                                    <rect opacity="0.5" x="7.5" y="7" width="5" height="19" rx="1.5" fill="currentColor"/>
+                                    <rect x="15" y="3" width="5" height="23" rx="1.5" fill="currentColor"/>
+                                    <rect opacity="0.5" x="22.5" y="0" width="5" height="26" rx="1.5" fill="currentColor"/>
+                                </svg>
+                            </span>
+                            <h3>Daily Expert Analysis</h3>
+                            <p>Our analysts review stats, form, and odds for key games every single day. Giving your bets a real foundation, not gut feeling.</p>
+                        </div>
+                        <div class="feature-stat">
+                            <span class="num display">10+</span>
+                            <span>years of experience, fresh daily analyses</span>
+                        </div>
+                    </div>
+                    <div class="feature-card reveal">
+                        <span class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="20" viewBox="0 0 28 20" fill="none">
+                                <path d="M14 0C7.5 0 2.1 4.1 0 10C2.1 15.9 7.5 20 14 20C20.5 20 25.9 15.9 28 10C25.9 4.1 20.5 0 14 0Z" fill="currentColor" opacity="0.3"/>
+                                <path d="M14 16C17.3137 16 20 13.3137 20 10C20 6.68629 17.3137 4 14 4C10.6863 4 8 6.68629 8 10C8 13.3137 10.6863 16 14 16Z" fill="currentColor"/>
+                                <circle cx="14" cy="10" r="3" fill="#F5F5F5"/>
+                            </svg>
+                        </span>
+                        <h3>Total Transparency</h3>
+                        <p>We share every prediction with you – both wins and losses. Transparent monthly track records verify our results.</p>
+                    </div>
+                    <div class="feature-card reveal">
+                        <span class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="28" viewBox="0 0 24 28" fill="none">
+                                <path d="M12 0L0 4.5V13C0 20.2 5.1 26.9 12 28C18.9 26.9 24 20.2 24 13V4.5L12 0Z" fill="currentColor" opacity="0.35"/>
+                                <path d="M12 2.5L2 6.5V13C2 19.2 6.4 24.9 12 26C17.6 24.9 22 19.2 22 13V6.5L12 2.5Z" fill="currentColor"/>
+                                <path d="M7.5 13.5L10.5 16.5L16.5 10.5" stroke="#F5F5F5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
+                        <h3>Clearly Explained</h3>
+                        <p>We clearly explain which bet type we recommend and why. You don't need to be an expert to follow along.</p>
+                    </div>
+                </div>
+                <p class="feature-note reveal"><b>Get Started</b> <a href="./alusta/">View predictions</a> and start winning today.</p>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             SO FUNKTIONIERT'S - 3 Schritte (Sticky Stack, CSS-Mockups)
+        ============================================================ -->
+        <section class="steps">
+            <div class="container">
+                <div class="section-head reveal">
+                    <h2 class="display section-title">3 simple steps<br>to your predictions</h2>
+                </div>
+
+                <!-- Schritt 1: Personalisierung -->
+                <div class="step-panel">
+                    <div class="step-grid">
+                        <div>
+                            <span class="step-label">Personalization</span>
+                            <div class="step-number display">01</div>
+                            <h3>Choose which predictions you want to see.</h3>
+                            <p class="step-text">Our international team analyzes every day. You only receive the predictions that truly matter to you.</p>
+                            <a class="step-link" href="./alusta/">Select your predictions
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </a>
+                        </div>
+                        <div class="phone-stage">
+                            <img class="phone-shape shape-ball" src="./assets/img/shape-ball.webp" alt="">
+                            <img class="phone-shape shape-bolt" src="./assets/img/shape-bolt.webp" alt="">
+                            <div class="phone">
+                                <div class="phone-screen">
+                                    <span class="phone-island"></span>
+                                    <div class="app-topbar">
+                                        <span style="display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:14px;">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                            Select leagues
+                                        </span>
+                                        <span style="font-size:12px;font-weight:600;color:#635BFF;">Reset</span>
+                                    </div>
+                                    <div class="screen-body">
+                                        <div class="phone-search">
+                                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M20 20L16.5 16.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                                            Search league...
+                                        </div>
+                                        <div class="phone-list">
+                                            <div class="phone-li">
+                                                <img src="./assets/img/leagues/premier-league.png" alt="">
+                                                <span class="t"><b>Premier League</b><span>England</span></span>
+                                                <span class="phone-check on"></span>
+                                            </div>
+                                            <div class="phone-li">
+                                                <img src="./assets/img/leagues/laliga.png" alt="">
+                                                <span class="t"><b>La Liga</b><span>Spain</span></span>
+                                                <span class="phone-check"></span>
+                                            </div>
+                                            <div class="phone-li">
+                                                <img src="./assets/img/leagues/serie-a.png" alt="">
+                                                <span class="t"><b>Serie A</b><span>Italy</span></span>
+                                                <span class="phone-check on"></span>
+                                            </div>
+                                            <div class="phone-li">
+                                                <img src="./assets/img/leagues/bundesliga.png" alt="">
+                                                <span class="t"><b>Bundesliga</b><span>Germany</span></span>
+                                                <span class="phone-check on"></span>
+                                            </div>
+                                            <div class="phone-li">
+                                                <img src="./assets/img/leagues/champions-league.png" alt="">
+                                                <span class="t"><b>Champions League</b><span>Europe</span></span>
+                                                <span class="phone-check on"></span>
+                                            </div>
+                                        </div>
+                                        <div class="phone-footnote">4 leagues selected</div>
+                                        <div class="phone-btn">Done</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Schritt 2: Registrierung -->
+                <div class="step-panel step-panel-2">
+                    <div class="step-grid">
+                        <div>
+                            <span class="step-label">Quick Sign-Up</span>
+                            <div class="step-number display">02</div>
+                            <h3>Create your account.</h3>
+                            <p class="step-text">Sign up in seconds and instantly unlock today's top predictions. Available 24/7.</p>
+                            <a class="step-link" href="./alusta/">Register Now
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </a>
+                        </div>
+                        <div class="phone-stage">
+                            <img class="phone-shape shape-bolt" src="./assets/img/shape-bolt.webp" alt="">
+                            <div class="phone">
+                                <div class="phone-screen">
+                                    <span class="phone-island"></span>
+                                    <div class="app-topbar">
+                                        <img class="brand" src="./assets/img/cdn/betsmart.svg" alt="BETSMART" style="height:20px;width:auto;display:block;">
+                                        <span style="font-size:11px;font-weight:600;color:var(--ink-faint);">Step 2/2</span>
+                                    </div>
+                                    <div class="screen-body">
+                                        <div class="phone-h" style="text-align:left;font-size:16px;margin-bottom:16px;">Create Account</div>
+                                        <div class="phone-field">
+                                            <label>First Name</label>
+                                            <div>John</div>
+                                        </div>
+                                        <div class="phone-field">
+                                            <label>Last Name</label>
+                                            <div>Smith</div>
+                                        </div>
+                                        <div class="phone-field">
+                                            <label>Email Address</label>
+                                            <div>john@email.com</div>
+                                        </div>
+                                        <div class="phone-field">
+                                            <label>Password</label>
+                                            <div style="display:flex;align-items:center;justify-content:space-between;">••••••••<svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" stroke="#B4B8BE" stroke-width="1.8"/><circle cx="12" cy="12" r="2.6" stroke="#B4B8BE" stroke-width="1.8"/></svg></div>
+                                        </div>
+                                        <div class="phone-consent">
+                                            <span class="phone-check on"></span>
+                                            <span>I agree to the Terms of Service and Privacy Policy.</span>
+                                        </div>
+                                        <div class="phone-btn">Register Now</div>
+                                        <div class="phone-perks">
+                                            <span><svg width="9" height="9" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5L10 17.5L19 7" stroke="#635BFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>In 60 seconds</span>
+                                            <span><svg width="9" height="9" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5L10 17.5L19 7" stroke="#635BFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>New daily tips</span>
+                                            <span><svg width="9" height="9" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5L10 17.5L19 7" stroke="#635BFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Expert verified</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Schritt 3: Tipps aufs Handy -->
+                <div class="step-panel">
+                    <div class="step-grid">
+                        <div>
+                            <span class="step-label">Direct to Phone</span>
+                            <div class="step-number display">03</div>
+                            <h3>Receive all predictions and place them instantly.</h3>
+                            <p class="step-text">No hours of researching or comparing odds. The best predictions every day, clearly explained and ready to place.</p>
+                            <a class="step-link" href="./alusta/">View predictions
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </a>
+                        </div>
+                        <div class="phone-stage">
+                            <img class="phone-shape shape-ball" src="./assets/img/shape-ball.webp" alt="">
+                            <div class="phone">
+                                <div class="phone-screen">
+                                    <span class="phone-island"></span>
+                                    <div class="app-topbar">
+                                        <img class="brand" src="./assets/img/cdn/betsmart.svg" alt="BETSMART" style="height:20px;width:auto;display:block;">
+                                        <span class="topbar-ico">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+                                        </span>
+                                    </div>
+                                    <div class="screen-body">
+                                        <div class="phone-push">
+                                            <span class="app-ico">bs</span>
+                                            <span><b>betsmart</b><span>3 new predictions are live!</span></span>
+                                        </div>
+                                        <div class="tip-card">
+                                            <div class="match">Bayern Munich - Dortmund</div>
+                                            <div class="meta">Bundesliga · Today, 18:30</div>
+                                            <div class="pick"><span>Pick: <b>Over 2.5 Goals</b></span><span class="tip-chip">Odds 1.85</span></div>
+                                        </div>
+                                        <div class="tip-card">
+                                            <div class="match">Inter - AC Milan</div>
+                                            <div class="meta">Serie A · Today, 20:45</div>
+                                            <div class="pick"><span>Pick: <b>Both Teams to Score</b></span><span class="tip-chip">Odds 1.72</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-bar">
+                                        <span class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5.5 9.5V21h13V9.5"/></svg>Home</span>
+                                        <span class="tab on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h11"/></svg>Tips</span>
+                                        <span class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V11M12 21V4M19 21v-6"/></svg>Stats</span>
+                                        <span class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20.5c0-3.6 3.4-5.5 7.5-5.5s7.5 1.9 7.5 5.5"/></svg>Profile</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ============================================================
+             SCHEIN VOM VORTAG (Promo-Block)
+        ============================================================ -->
+        <!-- ⚠ GEPARKT 2026-08-23 (v1.9, zweistufig): tippschein-latest-et.png liegt
+             noch NICHT auf Cloudinary (Tippschein-Chip faehrt Dry-Run).
+             REAKTIVIERUNG = Master Schritt 5: (1) `hidden` hier entfernen UND
+             (2) den echten <img id="slipPromoImg"> unten einkommentieren
+             (der leere Platzhalter ist bewusst aktiv, damit das Layout steht). -->
+        <section class="slip-promo">
+            <div class="container">
+                <div class="slip-promo-box reveal">
+                    <div class="slip-stage">
+                        <div class="slip-frame">
+                            <span class="slip-date-badge">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2.5" stroke="currentColor" stroke-width="2.2"/><path d="M3 9h18M8 3v4M16 3v4" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+                                <span id="slipBadgeDate">Yesterday</span>
+                            </span>
+                            <!-- Live-Pilet aus Cloudinary; Basis-URL funktioniert auch ohne JS, JS ergaenzt den taeglichen Cache-Buster.
+                                 ⚠ PENDING 2026-08-23: tippschein-latest-et.png liegt noch NICHT auf Cloudinary
+                                    (Tippschein-Chip faehrt Dry-Run) — deshalb ist die Sektion oben hidden und der
+                                    echte <img> auskommentiert. Reaktivierung = Master Schritt 5 (v1.9, zweistufig). -->
+                            <img id="slipPromoImg"
+                                 src="./assets/img/tippschein-latest-et.png"
+                                 data-daily="https://res.cloudinary.com/dwvckwbxh/image/upload"
+                                 alt="betsmart yesterday betting slip" loading="lazy">
+                        </div>
+                    </div>
+                    <div class="slip-copy">
+                        <div class="kicker">Yesterday's Ticket</div>
+                        <h2>We show you<br>every single slip.</h2>
+                        <p>Every day we share our genuine betting slip from yesterday. Wins and losses, completely unfiltered without cherry-picking. Above you can see yesterday's ticket.</p>
+                        <a class="btn" href="./alusta/">
+                            <span class="btn-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </span>
+                            View predictions
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             PROOF WALL
+        ============================================================ -->
+        <section class="proof">
+            <div class="container section-head reveal" style="margin-bottom: 30px;">
+                <h2 class="display section-title">Just another<br>"football expert"?</h2>
+                <p>Real winning screenshots from our community, never staged.</p>
+            </div>
+            <div class="proof-viewport">
+                <!-- Bilder stehen genau einmal im Markup, JS dupliziert fuer den Endlos-Loop -->
+                <div class="proof-track" data-clone>
+                    <img src="./assets/img/cdn/Frame-21-et.jpg" alt="Customer bet screenshot" loading="lazy">
+                    <img src="./assets/img/cdn/Frame-27-et.jpg" alt="Customer bet screenshot" loading="lazy">
+                    <img src="./assets/img/cdn/Frame-35-et.jpg" alt="Customer bet screenshot" loading="lazy">
+                    <img src="./assets/img/cdn/Frame-36-et.jpg" alt="Customer bet screenshot" loading="lazy">
+                    <img src="./assets/img/cdn/Frame-37-et.jpg" alt="Customer bet screenshot" loading="lazy">
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             TEXT-REVIEWS
+        ============================================================ -->
+        <section class="reviews">
+            <div class="container section-head reveal">
+                <h2 class="display section-title">Why bookmakers<br>hate us.</h2>
+            </div>
+
+            <!-- Reihe 1: nach links -->
+            <div class="marquee-viewport">
+                <div class="marquee-track" data-clone>
+                    <div class="review-card"><img class="stars" src="./assets/img/cdn/stars-lg.svg" alt="5 stars"><h3>Best predictions I've received</h3><p>Simply brilliant. Easily the most consistent predictions I've found so far.</p><div class="review-who"><span class="ini">A</span><span><b></b><span>Verified Customer</span></span></div></div>
+                    <div class="review-card"><img class="stars" src="./assets/img/cdn/stars-lg.svg" alt="5 stars"><h3>Solid wins, top team</h3><p>Been following since August. Around 4K profit so far. Awesome team and genuine analysis. Highly recommend!</p><div class="review-who"><span class="ini">K</span><span><b></b><span>Verified Customer</span></span></div></div>
+                    <div class="review-card"><img class="stars" src="./assets/img/cdn/stars-lg.svg" alt="5 stars"><h3>Genius tips and support</h3><p>Incredible accuracy. Daily updates and very friendly customer support.</p><div class="review-who"><span class="ini">T</span><span><b></b><span>Verified Customer</span></span></div></div>
+                    <div class="review-card"><img class="stars" src="./assets/img/cdn/stars-lg.svg" alt="5 stars"><h3>Insane tips, great odds</h3><p>Just insane picks. The odds are always spot-on.</p><div class="review-who"><span class="ini">L</span><span><b></b><span>Verified Customer</span></span></div></div>
+                    <div class="review-card"><img class="stars" src="./assets/img/cdn/stars-lg.svg" alt="5 stars"><h3>Top tips, premium service</h3><p>I tried several groups before, but betsmart is on another level. You can see the dedication in every single tip.</p><div class="review-who"><span class="ini">A</span><span><b></b><span>Verified Customer</span></span></div></div>
+                    <div class="review-card"><img class="stars" src="./assets/img/cdn/stars-lg.svg" alt="5 stars"><h3>Top combos daily</h3><p>Extremely satisfied. High-yield combos every day. Amazing experience.</p><div class="review-who"><span class="ini">N</span><span><b></b><span>Verified Customer</span></span></div></div>
+                    <div class="review-card"><img class="stars" src="./assets/img/cdn/stars-lg.svg" alt="5 stars"><h3>Seni parim teenindus</h3><p>Kõigist kohtadest, kus ma seni käinud olen, tunnen, et just siin betsmarti juures olen kõige paremates kätes.</p><div class="review-who"><span class="ini">F</span><span><b></b><span>Verified Customer</span></span></div></div>
+                    <div class="review-card"><img class="stars" src="./assets/img/cdn/stars-lg.svg" alt="5 stars"><h3>Win rate and team are elite</h3><p>So glad I joined betsmart. The win rate speaks for itself, and the analysts are genuine.</p><div class="review-who"><span class="ini">K</span><span><b></b><span>Verified Customer</span></span></div></div>
+                    <div class="review-card"><img class="stars" src="./assets/img/cdn/stars-lg.svg" alt="5 stars"><h3>Massive season start</h3><p>Bundesliga start was wildly strong, carrying over last season's momentum. Member for 1.5 years now.</p><div class="review-who"><span class="ini">T</span><span><b></b><span>Verified Customer</span></span></div></div>
+                    <div class="review-card"><img class="stars" src="./assets/img/cdn/stars-lg.svg" alt="5 stars"><h3>Better odds than competitors</h3><p>Very happy, consistently better value odds than any other service. Definitely recommend.</p><div class="review-who"><span class="ini">A</span><span><b></b><span>Verified Customer</span></span></div></div>
+                    <div class="review-card"><img class="stars" src="./assets/img/cdn/stars-lg.svg" alt="5 stars"><h3>Unbeatable value for money</h3><p>Great value, daily picks with an impressive hit rate. 2 months in and renewing for sure.</p><div class="review-who"><span class="ini">A</span><span><b></b><span>Verified Customer</span></span></div></div>
+                    <div class="review-card"><img class="stars" src="./assets/img/cdn/stars-lg.svg" alt="5 stars"><h3>Consistently strong!</h3><p>Super strong results across football and tennis grand slams. Great start.</p><div class="review-who"><span class="ini">M</span><span><b>miofuchs</b><span>Verified Customer</span></span></div></div>
+                </div>
+            </div>
+
+            <!-- Reihe 2: nach rechts -->
+            <div class="marquee-viewport marquee-reverse">
+                <div class="marquee-track" data-clone>
+                    <div class="review-card"><img class="stars" src="./assets/img/cdn/stars-lg.svg" alt="5 stars"><h3>Epic combo slips</h3><p>Simply mega. Unbelievably stable accumulators. Smashed the opening rounds.</p><div class="review-who"><span class="ini">L</span><span><b></b><span>Verified Customer</span></span></div></div>
+                    <div class="review-card"><img class="stars" src="./assets/img/cdn/stars-lg.svg" alt="5 stars"><h3>Reliable and profitable</h3><p>Very professional team. Great win rate. It provides a solid extra income every month.</p><div class="review-who"><span class="ini">C</span><span><b></b><span>Verified Customer</span></span></div></div>
+                    <div class="review-card"><img class="stars" src="./assets/img/cdn/stars-lg.svg" alt="5 stars"><h3>Brutally profitable</h3><p>Going brutally well. The analysts are doing an outstanding job.</p><div class="review-who"><span class="ini">J</span><span><b></b><span>Verified Customer</span></span></div></div>
+                    <div class="review-card"><img class="stars" src="./assets/img/cdn/stars-lg.svg" alt="5 stars"><h3>DFB Pokal cashed out</h3><p>Joined last week and cashed out 1,200€ profit on cup matches alone.</p><div class="review-who"><span class="ini">L</span><span><b>lassezouaghi</b><span>Verified Customer</span></span></div></div>
+                    <div class="review-card"><img class="stars" src="./assets/img/cdn/stars-lg.svg" alt="5 stars"><h3>Champions League on point</h3><p>Champions League qualifiers delivered great profits. Extremely satisfied.</p><div class="review-who"><span class="ini">L</span><span><b>lennyzimmerhofer</b><span>Verified Customer</span></span></div></div>
+                    <div class="review-card"><img class="stars" src="./assets/img/cdn/stars-lg.svg" alt="5 stars"><h3>Best bets in years</h3><p>Out of everywhere I've tried, these guys are undeniably the best. Over 6k made since May.</p><div class="review-who"><span class="ini">L</span><span><b></b><span>Verified Customer</span></span></div></div>
+                    <div class="review-card"><img class="stars" src="./assets/img/cdn/stars-lg.svg" alt="5 stars"><h3>Great start, +2k up</h3><p>Jumped in last week and already up 2k. The bookmakers took a heavy beating.</p><div class="review-who"><span class="ini">D</span><span><b></b><span>Verified Customer</span></span></div></div>
+                    <div class="review-card"><img class="stars" src="./assets/img/cdn/stars-lg.svg" alt="5 stars"><h3>Daily tips & great support</h3><p>Daily drops on schedule, excellent customer care. Very pleased with accuracy.</p><div class="review-who"><span class="ini">A</span><span><b></b><span>Verified Customer</span></span></div></div>
+                    <div class="review-card"><img class="stars" src="./assets/img/cdn/stars-lg.svg" alt="5 stars"><h3>Huge odds, great experience</h3><p>Super satisfied. High value odds and clean sweep on 2nd Bundesliga.</p><div class="review-who"><span class="ini">F</span><span><b></b><span>Verified Customer</span></span></div></div>
+                    <div class="review-card"><img class="stars" src="./assets/img/cdn/stars-lg.svg" alt="5 stars"><h3>Winning streak is back!</h3><p>First prediction hit immediately. Feels amazing to have a reliable winning streak.</p><div class="review-who"><span class="ini">A</span><span><b>adlerakademie</b><span>Verified Customer</span></span></div></div>
+                    <div class="review-card"><img class="stars" src="./assets/img/cdn/stars-lg.svg" alt="5 stars"><h3>Simply incredible picks</h3><p>Phenomenal picks. Easy to copy daily slips. Truly powerful analytics.</p><div class="review-who"><span class="ini">H</span><span><b></b><span>Verified Customer</span></span></div></div>
+                    <div class="review-card"><img class="stars" src="./assets/img/cdn/stars-lg.svg" alt="5 stars"><h3>Strong daily combos</h3><p>Outstanding selections, daily accumulators, consistent wins. Couldn't ask for more.</p><div class="review-who"><span class="ini">M</span><span><b></b><span>Verified Customer</span></span></div></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             FAQ
+        ============================================================ -->
+        <section class="faq">
+            <div class="container">
+                <div class="faq-grid">
+                    <div class="reveal">
+                        <h2 class="display section-title">Korduma kippuvad<br>küsimused.</h2>
+                    </div>
+                    <div class="reveal">
+                        <details open>
+                            <summary>Is betsmart reliable and legitimate?</summary>
+                            <p>Absolutely. We are transparent sports betting analysts with over 10 years of professional industry experience. All of our track records are publicly documented. Our team bets their own capital and shares every insight with you.</p>
+                        </details>
+                        <details>
+                            <summary>How does betsmart differ from other tipsters?</summary>
+                            <p>The hard truth: over 90% of tipsters online fabricate results with edited screenshots and manipulated stats. We do things differently: every single slip is published with verified proof – including our losses. Best of all, we back every prediction with our own money.</p>
+                        </details>
+                        <details>
+                            <summary>Are the predictions guaranteed to win?</summary>
+                            <p>Honest answer: no sports prediction is 100% guaranteed. However, our recommendations are grounded in rigorous statistical modeling and disciplined bankroll management. While individual upsets happen, our long-term win rate significantly outperforms standard market averages.</p>
+                        </details>
+                        <details>
+                            <summary>Do you provide singles or accumulator bets?</summary>
+                            <p>Both! We share single value bets and multi-match accumulators depending on where market value lies. Singles offer lower volatility, while accumulators provide higher payout multipliers. We clearly explain each recommendation so you stay in full control.</p>
+                        </details>
+                        <details>
+                            <summary>How many predictions are posted each day?</summary>
+                            <p>It varies by fixture schedule. On weekends with packed European leagues, you will typically receive 8–15 picks; on weekdays, 3–6. We prioritize quality over volume – betting only when a clear analytical edge is present.</p>
+                        </details>
+                        <details>
+                            <summary>How long do I keep access to predictions?</summary>
+                            <p>As long as your membership is active, you enjoy full unhindered access to every daily prediction and complete statistical history. You can cancel anytime with zero lock-in.</p>
+                        </details>
+                        <details>
+                            <summary>What if I have no prior betting experience?</summary>
+                            <p>Perfect – that is exactly who betsmart was built for! We break down every pick into clear, straightforward instructions. You don't need sports expertise; simply follow our pre-calculated selections. Many of our most profitable members started with zero prior experience.</p>
+                        </details>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             CTA
+        ============================================================ -->
+        <section class="cta">
+            <div class="container-wide">
+                <div class="cta-box">
+                    <div class="cta-copy reveal">
+                        <h2 class="display section-title">Claim your next<br>winning picks.</h2>
+                        <a class="btn" href="./alusta/">
+                            <span class="btn-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </span>
+                            View predictions
+                        </a>
+                    </div>
+                    <div class="cta-phone">
+                        <div class="phone">
+                            <div class="phone-screen">
+                                <span class="phone-island"></span>
+                                <div class="app-topbar">
+                                    <img class="brand" src="./assets/img/cdn/betsmart.svg" alt="BETSMART" style="height:20px;width:auto;display:block;">
+                                    <span class="topbar-ico">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20.5c0-3.6 3.4-5.5 7.5-5.5s7.5 1.9 7.5 5.5"/></svg>
+                                    </span>
+                                </div>
+                                <div class="screen-body">
+                                    <div class="phone-tabs">
+                                        <span class="on">Today's picks</span>
+                                        <span>Tomorrow's picks</span>
+                                    </div>
+                                    <div class="tip-card">
+                                        <div class="match">Manchester United - Chelsea</div>
+                                        <div class="meta">Premier League · Today, 16:00</div>
+                                        <div class="pick"><span>Pick: <b>Over 2.5 Goals</b></span><span class="tip-chip">Odds 1.90</span></div>
+                                    </div>
+                                    <div class="tip-card">
+                                        <div class="match">Real Madrid - Atlético</div>
+                                        <div class="meta">La Liga · Today, 21:00</div>
+                                        <div class="pick"><span>Pick: <b>Real Madrid to Win</b></span><span class="tip-chip">Odds 1.75</span></div>
+                                    </div>
+                                    <div class="tip-card">
+                                        <div class="match">Juventus - Napoli</div>
+                                        <div class="meta">Serie A · Today, 20:45</div>
+                                        <div class="pick"><span>Pick: <b>Under 3.5 Goals</b></span><span class="tip-chip">Odds 1.55</span></div>
+                                    </div>
+                                </div>
+                                <div class="tab-bar">
+                                    <span class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5.5 9.5V21h13V9.5"/></svg>Home</span>
+                                    <span class="tab on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h11"/></svg>Tips</span>
+                                    <span class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V11M12 21V4M19 21v-6"/></svg>Stats</span>
+                                    <span class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20.5c0-3.6 3.4-5.5 7.5-5.5s7.5 1.9 7.5 5.5"/></svg>Profile</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Lightbox für die Proof-Screenshots -->
+    <div class="lightbox" id="lightbox" aria-hidden="true">
+        <button class="lightbox-close" type="button" aria-label="Close">
+            <svg width="18" height="18" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 1L9 9M9 1L1 9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+        </button>
+        <img src="" alt="Customer bet screenshot enlarged">
+    </div>
+
+    <!-- ============================================================
+         FOOTER
+    ============================================================ -->
+    <footer>
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <a href="./"><img src="./assets/img/cdn/betsmart.svg" alt="BETSMART"></a>
+                    <p>Bet on knowledge, not luck.</p>
+                </div>
+                <nav class="footer-links">
+                    <a href="./statistika/">Statistics</a>
+                    <a href="./kogemused/">Reviews</a>
+                    <a href="./privaatsus/">Privacy Policy</a>
+                    <a href="./tingimused/">Terms of Service</a>
+                    <a href="./kontakt/">Contact</a>
+                </nav>
+            </div>
+            <p class="footer-legal">18+ · Please gamble responsibly. betsmart is not a bookmaker and does not accept wagers – we are an independent sports analytics service publishing research-backed tips. Predictions represent expert opinions without guarantee; past performance does not guarantee future results. Strictly 18+. Gambling can be addictive. If you need support, visit: <a href="https://www.begambleaware.org">begambleaware.org</a></p>
+        </div>
+    </footer>
+
+    <script>
+        document.documentElement.classList.add('js');
+
+        // Schein vom Vortag: Datum setzen + täglichen Cache-Buster an die Cloudinary-URL hängen
+        (function () {
+            var img = document.getElementById('slipPromoImg');
+            var badge = document.getElementById('slipBadgeDate');
+            var y = new Date();
+            y.setDate(y.getDate() - 1);
+            if (badge) badge.textContent = y.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
+            if (img && img.dataset.daily) {
+                var stamp = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+                img.src = './assets/img/tippschein-latest-et.png';
+            }
+        })();
+
+        // Marquee-Inhalte duplizieren (nahtloser -50%-Loop ohne doppelte Strings im Markup).
+        // Anzahl-basiert statt breiten-basiert: die alte Messung lief, BEVOR die Lazy-Bilder
+        // der Proof-Wall geladen waren (Breite 0), und verdoppelte dadurch massiv zu oft
+        // (80 statt 40 Bilder). Eine so riesige animierte GPU-Ebene kann echte iPhones
+        // einfrieren, während Desktops mit mehr Grafikspeicher sie problemlos rendern.
+        document.querySelectorAll('[data-clone]').forEach(function (track) {
+            var n = track.children.length;
+            if (!n) return;
+            var copies = n >= 12 ? 2 : Math.ceil(24 / n);
+            if (copies % 2) copies++;              // gerade Anzahl -> nahtloser -50%-Loop
+            var one = track.innerHTML, all = '';
+            for (var i = 0; i < copies; i++) all += one;
+            track.innerHTML = all;
+        });
+
+        // Scroll-Reveal. Inhalte sind ohne JS immer sichtbar; zusätzlich ein Fail-open-
+        // Fallback, der nach 2,5s alles zeigt, falls der IntersectionObserver auf einem
+        // Gerät nie feuert – so bleibt nie ein Abschnitt unsichtbar hängen.
+        var revealEls = document.querySelectorAll('.reveal');
+        var ioWorks = false;
+        var io = new IntersectionObserver(function (entries) {
+            ioWorks = true;
+            entries.forEach(function (e) {
+                if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+            });
+        }, { threshold: 0.15 });
+        revealEls.forEach(function (el) { io.observe(el); });
+        setTimeout(function () {
+            if (ioWorks) return;
+            revealEls.forEach(function (el) { el.classList.add('in'); });
+        }, 2500);
+
+        // iOS-Statusleiste in jedes App-Mockup einsetzen (reine Chrome, kein übersetzbarer Text)
+        (function () {
+            var sb = '<div class="status-bar"><span>9:41</span><span class="status-icons">' +
+                '<svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor" aria-hidden="true"><rect x="0" y="7.5" width="3" height="3.5" rx="1"/><rect x="4.7" y="5" width="3" height="6" rx="1"/><rect x="9.3" y="2.5" width="3" height="8.5" rx="1"/><rect x="14" y="0" width="3" height="11" rx="1"/></svg>' +
+                '<svg width="16" height="11" viewBox="0 0 16 11" fill="currentColor" aria-hidden="true"><path d="M8 2.2c2.4 0 4.6.9 6.2 2.5.3.3.3.7 0 1l-.7.7c-.28.28-.66.28-.94.02A6.5 6.5 0 0 0 8 4.6a6.5 6.5 0 0 0-4.56 1.84c-.28.26-.66.26-.94-.02l-.7-.7a.7.7 0 0 1 0-1A8.8 8.8 0 0 1 8 2.2Z"/><path d="M8 6.3c1.13 0 2.2.44 3 1.24.28.3.28.68 0 .96L8.5 10.5a.7.7 0 0 1-1 0L5 8.5a.68.68 0 0 1 0-.96A4.3 4.3 0 0 1 8 6.3Z"/></svg>' +
+                '<svg width="25" height="12" viewBox="0 0 25 12" fill="none" aria-hidden="true"><rect x="0.6" y="0.6" width="20.5" height="10.8" rx="3" stroke="currentColor" stroke-opacity="0.35"/><rect x="2" y="2" width="16.5" height="8" rx="1.5" fill="currentColor"/><path d="M23 4.2a2 2 0 0 1 0 3.6Z" fill="currentColor" fill-opacity="0.5"/></svg>' +
+                '</span></div>';
+            document.querySelectorAll('.phone-screen').forEach(function (s) {
+                s.insertAdjacentHTML('afterbegin', sb);
+            });
+        })();
+
+        // Lightbox: Proof-Screenshot per Klick groß öffnen
+        (function () {
+            var lb = document.getElementById('lightbox');
+            if (!lb) return;
+            var lbImg = lb.querySelector('img');
+            var viewport = document.querySelector('.proof-viewport');
+            function open(src) {
+                lbImg.src = src;
+                lb.classList.add('open');
+                lb.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
+            }
+            function close() {
+                lb.classList.remove('open');
+                lb.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+            }
+            if (viewport) {
+                viewport.addEventListener('click', function (e) {
+                    var img = e.target.closest('img');
+                    if (img) open(img.currentSrc || img.src);
+                });
+            }
+            lb.addEventListener('click', function (e) {
+                if (e.target === lb || e.target.closest('.lightbox-close')) close();
+            });
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' && lb.classList.contains('open')) close();
+            });
+        })();
+    </script>
+
+
+</body>
+</html>
