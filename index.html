@@ -1584,6 +1584,7 @@
                     <p>Bet on knowledge, not luck.</p>
                 </div>
                 <nav class="footer-links">
+                    <a href="./variant2.html" style="font-weight:700;color:var(--stripe-indigo);">Variant 2 (Minimal Layout)</a>
                     <a href="./statistika/">Statistics</a>
                     <a href="./kogemused/">Reviews</a>
                     <a href="./privaatsus/">Privacy Policy</a>
@@ -1686,7 +1687,16 @@
             });
         })();
     </script>
-
+    <!-- ============================================================
+         PERSISTENT VARIANT SWITCHER (Side-by-side comparison for client)
+    ============================================================ -->
+    <aside style="position:fixed;bottom:24px;right:24px;z-index:1000;background:rgba(255,255,255,0.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(10,37,64,0.15);padding:6px 12px;border-radius:100px;box-shadow:0 10px 30px rgba(10,37,64,0.18);display:flex;align-items:center;gap:8px;font-size:13px;font-family:var(--font-body);" aria-label="Variant Switcher">
+        <span style="background:#635BFF;color:#FFFFFF;font-weight:700;padding:4px 10px;border-radius:100px;font-size:11px;letter-spacing:0.03em;">VARIANT 1 (ORIGINAL)</span>
+        <a href="./variant2.html" style="color:#0A2540;font-weight:700;padding:4px 8px;border-radius:100px;transition:color 0.2s ease;display:flex;align-items:center;gap:5px;" title="Switch to Variant 2 (Minimal Layout)">
+            Switch to Variant 2 (Minimal)
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+    </aside>
 
 </body>
 </html>
