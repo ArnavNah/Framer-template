@@ -351,7 +351,7 @@
         /* ── Atoks Device Stage with Large Mobile Image & Floating Cards ── */
         .atoks-stage {
             position: relative;
-            max-width: 1100px;
+            max-width: 1160px;
             margin: 0 auto;
             display: flex;
             justify-content: center;
@@ -359,10 +359,10 @@
         }
         .atoks-ambient-glow {
             position: absolute;
-            top: 24%; left: 50%;
+            top: 22%; left: 50%;
             transform: translate(-50%, -50%);
-            width: min(85vw, 640px);
-            height: 420px;
+            width: min(90vw, 760px);
+            height: 460px;
             background: radial-gradient(ellipse at 50% 45%, rgba(102, 60, 246, 0.25) 0%, rgba(255, 141, 164, 0.14) 35%, rgba(0, 212, 255, 0.08) 55%, transparent 70%);
             border-radius: 50%;
             pointer-events: none;
@@ -373,15 +373,15 @@
         .hero-phone-wrap {
             position: relative;
             z-index: 2;
-            width: min(94vw, 680px);
-            max-width: 680px;
-            height: 560px;
+            width: min(94vw, 760px);
+            max-width: 760px;
+            height: 680px;
             overflow: hidden;
             margin: 0 auto;
             display: flex;
             justify-content: center;
-            -webkit-mask-image: linear-gradient(to bottom, #000000 48%, rgba(0, 0, 0, 0.6) 70%, rgba(0, 0, 0, 0) 94%);
-            mask-image: linear-gradient(to bottom, #000000 48%, rgba(0, 0, 0, 0.6) 70%, rgba(0, 0, 0, 0) 94%);
+            -webkit-mask-image: linear-gradient(to bottom, #000000 66%, rgba(0, 0, 0, 0.65) 84%, rgba(0, 0, 0, 0) 100%);
+            mask-image: linear-gradient(to bottom, #000000 66%, rgba(0, 0, 0, 0.65) 84%, rgba(0, 0, 0, 0) 100%);
         }
         .hero-phone-wrap::after {
             content: '';
@@ -389,8 +389,8 @@
             bottom: 0;
             left: 0;
             right: 0;
-            height: 180px;
-            background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.5) 35%, #FFFFFF 100%);
+            height: 150px;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.6) 45%, #FFFFFF 100%);
             pointer-events: none;
             z-index: 3;
         }
@@ -429,13 +429,13 @@
         }
 
         .atoks-card-left {
-            left: max(10px, calc(50% - 485px));
-            top: 210px;
+            left: max(10px, calc(50% - 505px));
+            top: 240px;
             animation: floatLeft 6s ease-in-out infinite alternate;
         }
         .atoks-card-right {
-            right: max(10px, calc(50% - 485px));
-            top: 310px;
+            right: max(10px, calc(50% - 505px));
+            top: 380px;
             animation: floatRight 6s ease-in-out infinite alternate;
         }
         @keyframes floatLeft {
@@ -1301,8 +1301,8 @@
             .process-card:nth-child(even) .process-text { order: 1; }
             .process-card:nth-child(even) .process-visual { order: 2; }
             .hero-phone-wrap {
-                width: min(92vw, 540px);
-                height: 440px;
+                width: min(92vw, 620px);
+                height: 540px;
             }
             .atoks-floating-card {
                 width: 275px;
@@ -1317,11 +1317,11 @@
             .atoks-card-sub, .atoks-card-date { font-size: 10.5px; }
             .atoks-card-left {
                 left: 10px;
-                top: 170px;
+                top: 190px;
             }
             .atoks-card-right {
                 right: 10px;
-                top: 280px;
+                top: 320px;
             }
             .shape-ball-float, .shape-bolt-float { display: none; }
             .hero { padding-top: 40px; }
@@ -1332,8 +1332,8 @@
             .hero-copy { font-size: 1rem; }
             .hero-phone-wrap {
                 width: 100%;
-                max-width: 360px;
-                height: 310px;
+                max-width: 400px;
+                height: 360px;
             }
             .atoks-floating-card {
                 position: relative;
