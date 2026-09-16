@@ -724,93 +724,435 @@
            HOW IT WORKS: 3-STEP PROCESS (Sticky Card Stacking)
            ========================================================== */
         .process-section {
-            padding: 80px 0 120px;
+            padding: 90px 0 130px;
             background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.7) 30%, transparent 100%);
             position: relative;
+        }
+        .process-container {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 0 24px;
+            width: 100%;
         }
         .process-card {
             position: -webkit-sticky;
             position: sticky;
-            top: 95px;
+            top: 85px;
             background: #FFFFFF;
             border: 1px solid var(--line);
-            border-radius: var(--radius-lg);
-            padding: clamp(36px, 5vw, 68px);
-            margin-bottom: 56px;
-            box-shadow: 0 16px 44px rgba(10, 37, 64, 0.1);
+            border-radius: 32px;
+            padding: clamp(44px, 5vw, 72px) clamp(32px, 4.5vw, 68px);
+            margin-bottom: 52px;
+            box-shadow: 0 20px 50px rgba(10, 37, 64, 0.08);
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 48px;
+            grid-template-columns: 1.05fr 0.95fr;
+            gap: clamp(36px, 4vw, 64px);
             align-items: center;
             overflow: hidden;
             transform-origin: center top;
             transition: box-shadow .3s ease, border-color .3s ease;
         }
         .process-card-1 {
-            top: 95px;
+            top: 85px;
             z-index: 1;
             background: #FFFFFF;
         }
         .process-card-2 {
-            top: 115px;
+            top: 105px;
             z-index: 2;
             background: linear-gradient(265deg, rgba(99,91,255,0.06) 0%, rgba(0,212,255,0.08) 100%), #FFFFFF;
-            box-shadow: 0 22px 52px rgba(10, 37, 64, 0.14);
+            box-shadow: 0 24px 56px rgba(10, 37, 64, 0.12);
         }
         .process-card-3 {
-            top: 135px;
+            top: 125px;
             z-index: 3;
             background: #FFFFFF;
-            box-shadow: 0 28px 60px rgba(10, 37, 64, 0.18);
+            box-shadow: 0 28px 64px rgba(10, 37, 64, 0.16);
         }
         .process-card:nth-child(even) .process-text { order: 2; }
         .process-card:nth-child(even) .process-visual { order: 1; }
 
         .process-step-pill {
             display: inline-block;
-            font-size: 12px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            color: var(--stripe-indigo);
-            background: #EEF0FF;
-            padding: 4px 12px;
-            border-radius: 100px;
-            margin-bottom: 18px;
+            font-size: 13.5px;
+            font-weight: 600;
+            padding: 3px 18px;
+            border-radius: 40px;
+            border: 1px solid rgba(10, 37, 64, 0.09);
+            background: rgba(255, 255, 255, 0.85);
+            color: var(--ink);
+            margin-bottom: 22px;
+        }
+        /* Giant Ghost Watermark Number matching original */
+        .process-number {
+            font-family: var(--font-display);
+            font-size: clamp(120px, 14vw, 210px);
+            font-weight: 700;
+            line-height: 0.62;
+            margin-bottom: 26px;
+            background: linear-gradient(180deg, rgba(10, 37, 64, 0.12) 13.2%, rgba(247, 247, 253, 0.06) 94.29%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            user-select: none;
         }
         .process-text h3 {
             font-family: var(--font-display);
             text-transform: uppercase;
-            font-size: clamp(30px, 3vw, 40px);
+            font-size: clamp(34px, 3.5vw, 44px);
             font-weight: 700;
-            line-height: 1.1;
-            letter-spacing: -0.5px;
-            margin-bottom: 14px;
+            line-height: 1.08;
+            letter-spacing: -0.8px;
+            color: var(--ink);
+            margin-bottom: 16px;
         }
         .process-text p {
             color: var(--ink-soft);
-            font-size: 1.05rem;
-            line-height: 1.6;
-            margin-bottom: 22px;
+            font-size: clamp(1.02rem, 1.1vw, 1.12rem);
+            line-height: 1.62;
+            max-width: 440px;
+            margin-bottom: 24px;
         }
         .process-link {
             display: inline-flex;
             align-items: center;
             gap: 8px;
             font-weight: 700;
+            font-size: 15px;
             color: var(--stripe-indigo);
             border-bottom: 2px solid var(--stripe-indigo);
-            padding-bottom: 2px;
+            padding-bottom: 3px;
+            text-decoration: none;
+            transition: color .2s ease, border-color .2s ease;
         }
-        .process-visual {
+        .process-link svg {
+            transition: transform .25s ease;
+        }
+        .process-link:hover svg {
+            transform: translateX(4px);
+        }
+
+        /* ── CSS Phone & Visual Stage ── */
+        .phone-stage {
+            position: relative;
             display: flex;
             justify-content: center;
+            align-items: center;
+            padding: 16px 0;
+            width: 100%;
         }
-        .process-visual .phone {
-            width: 280px;
-            transform: rotate(-2deg);
+        .phone-stage::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 420px;
+            height: 420px;
+            background: radial-gradient(circle, rgba(99,91,255,0.22) 0%, rgba(0,212,255,0.1) 50%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
         }
-        .process-card:nth-child(even) .process-visual .phone { transform: rotate(2deg); }
+        .phone-shape {
+            position: absolute;
+            pointer-events: none;
+            z-index: 2;
+            filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.15));
+        }
+        .shape-ball {
+            bottom: 2%;
+            left: 4%;
+            width: 96px;
+            transform: rotate(-12deg);
+        }
+        .shape-bolt {
+            top: 2%;
+            right: 4%;
+            width: 80px;
+            transform: rotate(10deg);
+        }
+        .phone {
+            position: relative;
+            width: clamp(305px, 25vw, 335px);
+            background: linear-gradient(150deg, #34363a 0%, #16171a 46%, #202226 100%);
+            border-radius: 48px;
+            padding: 10px;
+            box-shadow: 0 42px 80px -24px rgba(0, 0, 0, 0.45), 0 0 0 2px #050506, inset 0 0 0 5px #1a1b1d;
+            transform: rotate(-3deg);
+            transition: transform .3s ease;
+        }
+        .process-card:nth-child(even) .phone {
+            transform: rotate(3deg);
+        }
+        .phone::before, .phone::after {
+            content: '';
+            position: absolute;
+            background: #0b0c0d;
+            border-radius: 3px;
+        }
+        .phone::before { left: -3px; top: 132px; width: 3px; height: 52px; }
+        .phone::after  { right: -3px; top: 150px; width: 3px; height: 68px; }
+        .phone-screen {
+            position: relative;
+            background: #FFFFFF;
+            border-radius: 39px;
+            overflow: hidden;
+            min-height: 560px;
+            display: flex;
+            flex-direction: column;
+            font-size: 13px;
+        }
+        .phone-island {
+            position: absolute;
+            top: 11px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 82px;
+            height: 21px;
+            background: #050506;
+            border-radius: 100px;
+            z-index: 5;
+        }
+        .status-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 13px 22px 7px;
+            font-size: 12.5px;
+            font-weight: 700;
+            color: var(--ink);
+        }
+        .status-icons {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .status-icons svg { display: block; }
+        .app-topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 4px 16px 11px;
+            border-bottom: 1px solid var(--line);
+        }
+        .app-topbar .brand {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 17px;
+            letter-spacing: -0.5px;
+        }
+        .app-topbar .topbar-ico {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #F1F2F4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--ink-soft);
+        }
+        .screen-body {
+            flex: 1;
+            padding: 14px 16px 16px;
+            display: flex;
+            flex-direction: column;
+        }
+        .phone-h {
+            text-align: center;
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 14px;
+            letter-spacing: -0.01em;
+            color: var(--ink);
+        }
+        .phone-search {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            background: #F1F2F4;
+            border-radius: 10px;
+            color: var(--ink-faint);
+            padding: 9px 12px;
+            font-size: 12px;
+            margin-bottom: 12px;
+        }
+        .phone-search svg { flex-shrink: 0; }
+        .phone-list { display: flex; flex-direction: column; gap: 8px; }
+        .phone-li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #FFFFFF;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 10px 12px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+        }
+        .phone-li img { width: 26px; height: 26px; object-fit: contain; }
+        .phone-li .t { flex: 1; line-height: 1.25; }
+        .phone-li .t b { display: block; font-size: 12.5px; color: var(--ink); }
+        .phone-li .t span { font-size: 10.5px; color: var(--ink-faint); }
+        .phone-check {
+            width: 20px;
+            height: 20px;
+            border-radius: 6px;
+            border: 1.5px solid #C9CDD3;
+            flex-shrink: 0;
+        }
+        .phone-check.on {
+            background: var(--stripe-indigo);
+            border-color: var(--stripe-deep-indigo);
+            position: relative;
+        }
+        .phone-check.on::after {
+            content: '';
+            position: absolute;
+            inset: 4px 5px 6px;
+            border-left: 2.5px solid #FFFFFF;
+            border-bottom: 2.5px solid #FFFFFF;
+            transform: rotate(-45deg);
+        }
+        .phone-footnote {
+            text-align: center;
+            font-size: 11px;
+            color: var(--ink-faint);
+            margin-top: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .phone-btn {
+            background: var(--stripe-indigo);
+            color: #FFFFFF !important;
+            font-weight: 700;
+            text-align: center;
+            border-radius: 100px;
+            padding: 12px;
+            margin-top: 10px;
+            font-size: 13px;
+            box-shadow: 0 3px 12px rgba(99, 91, 255, 0.4);
+            cursor: pointer;
+        }
+        .phone-field { margin-bottom: 10px; }
+        .phone-field label {
+            display: block;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--ink-faint);
+            margin-bottom: 4px;
+        }
+        .phone-field div {
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            padding: 9px 12px;
+            font-size: 13px;
+            background: #FFFFFF;
+            color: var(--ink);
+        }
+        .phone-consent {
+            display: flex;
+            gap: 8px;
+            font-size: 10.5px;
+            color: var(--ink-soft);
+            line-height: 1.45;
+            margin: 12px 0 4px;
+        }
+        .phone-consent .phone-check { width: 16px; height: 16px; margin-top: 1px; }
+        .phone-consent .phone-check.on::after {
+            inset: 3px 4px 5px;
+            border-width: 0 0 2px 2px;
+            border-style: solid;
+            border-color: #FFFFFF;
+        }
+        .phone-perks {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            font-size: 9.5px;
+            color: var(--ink-soft);
+            margin-top: 10px;
+        }
+        .phone-perks span { display: inline-flex; align-items: center; gap: 4px; }
+        .phone-perks svg { flex-shrink: 0; }
+        .tip-card {
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 8px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+            background: #FFFFFF;
+        }
+        .tip-card .match { font-weight: 700; font-size: 12.5px; color: var(--ink); }
+        .tip-card .meta { font-size: 10.5px; color: var(--ink-faint); margin: 2px 0 8px; }
+        .tip-card .pick {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #F4F5FF;
+            border: 1px solid rgba(99, 91, 255, 0.25);
+            border-radius: 8px;
+            padding: 7px 10px;
+            font-size: 11.5px;
+            color: var(--ink);
+        }
+        .tip-card .pick b { font-size: 12px; }
+        .tip-chip {
+            background: var(--stripe-indigo);
+            color: #FFFFFF !important;
+            font-size: 9px;
+            font-weight: 800;
+            text-transform: uppercase;
+            padding: 3px 8px;
+            border-radius: 100px;
+            letter-spacing: 0.04em;
+        }
+        .phone-push {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            background: rgba(27, 28, 30, 0.92);
+            color: #FFFFFF;
+            border-radius: 14px;
+            padding: 10px 12px;
+            margin-bottom: 14px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+        }
+        .phone-push .app-ico {
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            background: var(--stripe-indigo);
+            color: #FFFFFF !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 12px;
+            flex-shrink: 0;
+        }
+        .phone-push span b { display: block; font-size: 12px; color: #FFFFFF; }
+        .phone-push span span { font-size: 10.5px; color: rgba(255,255,255,0.7); }
+        .tab-bar {
+            display: flex;
+            border-top: 1px solid var(--line);
+            padding: 8px 4px 11px;
+            background: #FFFFFF;
+            margin-top: auto;
+        }
+        .tab-bar .tab {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            font-size: 8.5px;
+            font-weight: 600;
+            color: #B4B8BE;
+        }
+        .tab-bar .tab svg { width: 21px; height: 21px; }
+        .tab-bar .tab.on { color: var(--ink); }
+        .tab-bar .tab.on svg { color: var(--stripe-indigo); }
 
         /* ==========================================================
            SCHEIN VOM VORTAG (Promo-Block - Light Stripe Style)
@@ -1480,7 +1822,7 @@
              HOW IT WORKS: 3-STEP PROCESS (From Original)
         ============================================================ -->
         <section class="process-section" id="how-it-works">
-            <div class="container">
+            <div class="process-container">
                 <div class="section-head reveal">
                     <h2 class="display section-title">3 simple steps<br>to your predictions</h2>
                 </div>
@@ -1488,36 +1830,64 @@
                 <!-- Step 1 -->
                 <div class="process-card process-card-1">
                     <div class="process-text">
-                        <span class="process-step-pill">01 Personalization</span>
+                        <span class="process-step-pill">Personalization</span>
+                        <div class="process-number display">01</div>
                         <h3>Choose which predictions you want to see.</h3>
                         <p>Our international team analyzes every day. You only receive the predictions that truly matter to you.</p>
                         <a class="process-link" href="./alusta/">Select your predictions
-                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                         </a>
                     </div>
                     <div class="process-visual">
-                        <div class="phone">
-                            <div class="phone-screen">
-                                <span class="phone-island"></span>
-                                <div class="status-bar"><span>9:41</span><span>100%</span></div>
-                                <div class="app-topbar"><span style="font-weight:700;font-size:13px;">Select leagues</span><span style="font-size:11px;color:#635BFF;font-weight:700;">Reset</span></div>
-                                <div class="screen-body">
-                                    <div style="background:#F1F2F4;border-radius:8px;padding:7px 10px;font-size:11px;color:var(--ink-faint);margin-bottom:10px;">Search league...</div>
-                                    <div style="display:flex;flex-direction:column;gap:6px;font-size:11.5px;">
-                                        <div style="display:flex;align-items:center;justify-content:space-between;border:1px solid var(--line);border-radius:8px;padding:8px 10px;">
-                                            <span style="display:flex;align-items:center;gap:6px;"><img src="./assets/img/leagues/premier-league.png" style="height:18px;"><b>Premier League</b></span>
-                                            <span style="background:#635BFF;color:#fff;width:16px;height:16px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:10px;">✓</span>
-                                        </div>
-                                        <div style="display:flex;align-items:center;justify-content:space-between;border:1px solid var(--line);border-radius:8px;padding:8px 10px;">
-                                            <span style="display:flex;align-items:center;gap:6px;"><img src="./assets/img/leagues/champions-league.png" style="height:18px;"><b>Champions League</b></span>
-                                            <span style="background:#635BFF;color:#fff;width:16px;height:16px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:10px;">✓</span>
-                                        </div>
-                                        <div style="display:flex;align-items:center;justify-content:space-between;border:1px solid var(--line);border-radius:8px;padding:8px 10px;">
-                                            <span style="display:flex;align-items:center;gap:6px;"><img src="./assets/img/leagues/bundesliga.png" style="height:18px;"><b>Bundesliga</b></span>
-                                            <span style="background:#635BFF;color:#fff;width:16px;height:16px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:10px;">✓</span>
-                                        </div>
+                        <div class="phone-stage">
+                            <img class="phone-shape shape-ball" src="./assets/img/shape-ball.webp" alt="">
+                            <img class="phone-shape shape-bolt" src="./assets/img/shape-bolt.webp" alt="">
+                            <div class="phone">
+                                <div class="phone-screen">
+                                    <span class="phone-island"></span>
+                                    <div class="status-bar"><span>9:41</span><span class="status-icons"><svg width="16" height="12" viewBox="0 0 16 12" fill="none"><path d="M1 10h2v2H1v-2zm4-3h2v5H5V7zm4-3h2v8H9V4zm4-3h2v11h-2V1z" fill="currentColor"/></svg><svg width="15" height="11" viewBox="0 0 16 12" fill="currentColor"><path d="M8 2.5a11.3 11.3 0 0 1 7.2 2.6.8.8 0 0 1 .1 1.1l-1.6 1.8a.7.7 0 0 1-1 .1A8.2 8.2 0 0 0 8 6.5a8.2 8.2 0 0 0-4.7 1.6.7.7 0 0 1-1-.1L.7 6.2a.8.8 0 0 1 .1-1.1A11.3 11.3 0 0 1 8 2.5z"/></svg><svg width="22" height="11" viewBox="0 0 24 12" fill="none"><rect x="1" y="1" width="19" height="10" rx="3" stroke="currentColor" stroke-width="1.5"/><rect x="3" y="3" width="13" height="6" rx="1.5" fill="currentColor"/><path d="M22 4.5v3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span></div>
+                                    <div class="app-topbar">
+                                        <span style="display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:14px;color:var(--ink);">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                            Select leagues
+                                        </span>
+                                        <span style="font-size:12px;font-weight:600;color:var(--stripe-indigo);cursor:pointer;">Reset</span>
                                     </div>
-                                    <div style="text-align:center;background:#635BFF;color:#fff;border-radius:100px;padding:9px;font-weight:700;font-size:12px;margin-top:auto;">Done</div>
+                                    <div class="screen-body">
+                                        <div class="phone-search">
+                                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M20 20L16.5 16.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                                            Search league...
+                                        </div>
+                                        <div class="phone-list">
+                                            <div class="phone-li">
+                                                <img src="./assets/img/leagues/premier-league.png" alt="Premier League">
+                                                <span class="t"><b>Premier League</b><span>England</span></span>
+                                                <span class="phone-check on"></span>
+                                            </div>
+                                            <div class="phone-li">
+                                                <img src="./assets/img/leagues/laliga.png" alt="La Liga">
+                                                <span class="t"><b>La Liga</b><span>Spain</span></span>
+                                                <span class="phone-check"></span>
+                                            </div>
+                                            <div class="phone-li">
+                                                <img src="./assets/img/leagues/serie-a.png" alt="Serie A">
+                                                <span class="t"><b>Serie A</b><span>Italy</span></span>
+                                                <span class="phone-check on"></span>
+                                            </div>
+                                            <div class="phone-li">
+                                                <img src="./assets/img/leagues/bundesliga.png" alt="Bundesliga">
+                                                <span class="t"><b>Bundesliga</b><span>Germany</span></span>
+                                                <span class="phone-check on"></span>
+                                            </div>
+                                            <div class="phone-li">
+                                                <img src="./assets/img/leagues/champions-league.png" alt="Champions League">
+                                                <span class="t"><b>Champions League</b><span>Europe</span></span>
+                                                <span class="phone-check on"></span>
+                                            </div>
+                                        </div>
+                                        <div class="phone-footnote">4 leagues selected</div>
+                                        <div class="phone-btn">Done</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1527,27 +1897,54 @@
                 <!-- Step 2 -->
                 <div class="process-card process-card-2">
                     <div class="process-text">
-                        <span class="process-step-pill">02 Quick Sign-Up</span>
+                        <span class="process-step-pill">Quick Sign-Up</span>
+                        <div class="process-number display">02</div>
                         <h3>Create your account.</h3>
                         <p>Sign up in seconds and instantly unlock today's top predictions. Available 24/7.</p>
                         <a class="process-link" href="./alusta/">Register Now
-                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                         </a>
                     </div>
                     <div class="process-visual">
-                        <div class="phone">
-                            <div class="phone-screen">
-                                <span class="phone-island"></span>
-                                <div class="status-bar"><span>9:41</span><span>100%</span></div>
-                                <div class="app-topbar"><img src="./assets/img/cdn/betsmart.svg" style="height:16px;"><span style="font-size:10px;color:var(--ink-faint);">Step 2/2</span></div>
-                                <div class="screen-body">
-                                    <div style="font-weight:700;font-size:14px;margin-bottom:10px;">Create Account</div>
-                                    <div style="display:flex;flex-direction:column;gap:6px;font-size:11px;">
-                                        <div style="border:1px solid var(--line);border-radius:8px;padding:7px 10px;">First Name: John</div>
-                                        <div style="border:1px solid var(--line);border-radius:8px;padding:7px 10px;">Email: john@email.com</div>
-                                        <div style="border:1px solid var(--line);border-radius:8px;padding:7px 10px;">Password: ••••••••</div>
+                        <div class="phone-stage">
+                            <img class="phone-shape shape-bolt" src="./assets/img/shape-bolt.webp" alt="">
+                            <div class="phone">
+                                <div class="phone-screen">
+                                    <span class="phone-island"></span>
+                                    <div class="status-bar"><span>9:41</span><span class="status-icons"><svg width="16" height="12" viewBox="0 0 16 12" fill="none"><path d="M1 10h2v2H1v-2zm4-3h2v5H5V7zm4-3h2v8H9V4zm4-3h2v11h-2V1z" fill="currentColor"/></svg><svg width="15" height="11" viewBox="0 0 16 12" fill="currentColor"><path d="M8 2.5a11.3 11.3 0 0 1 7.2 2.6.8.8 0 0 1 .1 1.1l-1.6 1.8a.7.7 0 0 1-1 .1A8.2 8.2 0 0 0 8 6.5a8.2 8.2 0 0 0-4.7 1.6.7.7 0 0 1-1-.1L.7 6.2a.8.8 0 0 1 .1-1.1A11.3 11.3 0 0 1 8 2.5z"/></svg><svg width="22" height="11" viewBox="0 0 24 12" fill="none"><rect x="1" y="1" width="19" height="10" rx="3" stroke="currentColor" stroke-width="1.5"/><rect x="3" y="3" width="13" height="6" rx="1.5" fill="currentColor"/><path d="M22 4.5v3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span></div>
+                                    <div class="app-topbar">
+                                        <img class="brand" src="./assets/img/cdn/betsmart.svg" alt="BETSMART" style="height:20px;width:auto;display:block;">
+                                        <span style="font-size:11px;font-weight:600;color:var(--ink-faint);">Step 2/2</span>
                                     </div>
-                                    <div style="background:#635BFF;color:#fff;text-align:center;font-weight:700;border-radius:100px;padding:9px;font-size:12px;margin-top:auto;">Register Now</div>
+                                    <div class="screen-body">
+                                        <div class="phone-h" style="text-align:left;font-size:16px;margin-bottom:16px;">Create Account</div>
+                                        <div class="phone-field">
+                                            <label>First Name</label>
+                                            <div>John</div>
+                                        </div>
+                                        <div class="phone-field">
+                                            <label>Last Name</label>
+                                            <div>Smith</div>
+                                        </div>
+                                        <div class="phone-field">
+                                            <label>Email Address</label>
+                                            <div>john@email.com</div>
+                                        </div>
+                                        <div class="phone-field">
+                                            <label>Password</label>
+                                            <div style="display:flex;align-items:center;justify-content:space-between;">••••••••<svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" stroke="#B4B8BE" stroke-width="1.8"/><circle cx="12" cy="12" r="2.6" stroke="#B4B8BE" stroke-width="1.8"/></svg></div>
+                                        </div>
+                                        <div class="phone-consent">
+                                            <span class="phone-check on"></span>
+                                            <span>I agree to the Terms of Service and Privacy Policy.</span>
+                                        </div>
+                                        <div class="phone-btn">Register Now</div>
+                                        <div class="phone-perks">
+                                            <span><svg width="9" height="9" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5L10 17.5L19 7" stroke="#635BFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>In 60 seconds</span>
+                                            <span><svg width="9" height="9" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5L10 17.5L19 7" stroke="#635BFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>New daily tips</span>
+                                            <span><svg width="9" height="9" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5L10 17.5L19 7" stroke="#635BFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Expert verified</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1557,35 +1954,48 @@
                 <!-- Step 3 -->
                 <div class="process-card process-card-3">
                     <div class="process-text">
-                        <span class="process-step-pill">03 Direct to Phone</span>
+                        <span class="process-step-pill">Direct to Phone</span>
+                        <div class="process-number display">03</div>
                         <h3>Receive all predictions and place them instantly.</h3>
                         <p>No hours of researching or comparing odds. The best predictions every day, clearly explained and ready to place.</p>
                         <a class="process-link" href="./alusta/">View predictions
-                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                         </a>
                     </div>
                     <div class="process-visual">
-                        <div class="phone">
-                            <div class="phone-screen">
-                                <span class="phone-island"></span>
-                                <div class="status-bar"><span>9:41</span><span>100%</span></div>
-                                <div class="app-topbar"><img src="./assets/img/cdn/betsmart.svg" style="height:16px;"><span>🔔</span></div>
-                                <div class="screen-body">
-                                    <div style="border:1px solid var(--line);border-radius:10px;padding:10px;margin-bottom:8px;">
-                                        <div style="font-size:12px;font-weight:700;">Bayern - Dortmund</div>
-                                        <div style="font-size:10px;color:var(--ink-faint);">Bundesliga · Today 18:30</div>
-                                        <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:11px;background:#F4F5FF;padding:5px 8px;border-radius:6px;">
-                                            <span>Pick: <b>Over 2.5 Goals</b></span>
-                                            <span style="background:#635BFF;color:#fff;font-weight:700;padding:1px 6px;border-radius:100px;font-size:10px;">1.85</span>
+                        <div class="phone-stage">
+                            <img class="phone-shape shape-ball" src="./assets/img/shape-ball.webp" alt="">
+                            <div class="phone">
+                                <div class="phone-screen">
+                                    <span class="phone-island"></span>
+                                    <div class="status-bar"><span>9:41</span><span class="status-icons"><svg width="16" height="12" viewBox="0 0 16 12" fill="none"><path d="M1 10h2v2H1v-2zm4-3h2v5H5V7zm4-3h2v8H9V4zm4-3h2v11h-2V1z" fill="currentColor"/></svg><svg width="15" height="11" viewBox="0 0 16 12" fill="currentColor"><path d="M8 2.5a11.3 11.3 0 0 1 7.2 2.6.8.8 0 0 1 .1 1.1l-1.6 1.8a.7.7 0 0 1-1 .1A8.2 8.2 0 0 0 8 6.5a8.2 8.2 0 0 0-4.7 1.6.7.7 0 0 1-1-.1L.7 6.2a.8.8 0 0 1 .1-1.1A11.3 11.3 0 0 1 8 2.5z"/></svg><svg width="22" height="11" viewBox="0 0 24 12" fill="none"><rect x="1" y="1" width="19" height="10" rx="3" stroke="currentColor" stroke-width="1.5"/><rect x="3" y="3" width="13" height="6" rx="1.5" fill="currentColor"/><path d="M22 4.5v3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span></div>
+                                    <div class="app-topbar">
+                                        <img class="brand" src="./assets/img/cdn/betsmart.svg" alt="BETSMART" style="height:20px;width:auto;display:block;">
+                                        <span class="topbar-ico">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+                                        </span>
+                                    </div>
+                                    <div class="screen-body">
+                                        <div class="phone-push">
+                                            <span class="app-ico">bs</span>
+                                            <span><b>betsmart</b><span>3 new predictions are live!</span></span>
+                                        </div>
+                                        <div class="tip-card">
+                                            <div class="match">Bayern Munich - Dortmund</div>
+                                            <div class="meta">Bundesliga · Today, 18:30</div>
+                                            <div class="pick"><span>Pick: <b>Over 2.5 Goals</b></span><span class="tip-chip">Odds 1.85</span></div>
+                                        </div>
+                                        <div class="tip-card">
+                                            <div class="match">Inter - AC Milan</div>
+                                            <div class="meta">Serie A · Today, 20:45</div>
+                                            <div class="pick"><span>Pick: <b>Both Teams to Score</b></span><span class="tip-chip">Odds 1.72</span></div>
                                         </div>
                                     </div>
-                                    <div style="border:1px solid var(--line);border-radius:10px;padding:10px;">
-                                        <div style="font-size:12px;font-weight:700;">Inter - AC Milan</div>
-                                        <div style="font-size:10px;color:var(--ink-faint);">Serie A · Today 20:45</div>
-                                        <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:11px;background:#F4F5FF;padding:5px 8px;border-radius:6px;">
-                                            <span>Pick: <b>Both Teams to Score</b></span>
-                                            <span style="background:#635BFF;color:#fff;font-weight:700;padding:1px 6px;border-radius:100px;font-size:10px;">1.72</span>
-                                        </div>
+                                    <div class="tab-bar">
+                                        <span class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5.5 9.5V21h13V9.5"/></svg>Home</span>
+                                        <span class="tab on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h11"/></svg>Tips</span>
+                                        <span class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V11M12 21V4M19 21v-6"/></svg>Stats</span>
+                                        <span class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20.5c0-3.6 3.4-5.5 7.5-5.5s7.5 1.9 7.5 5.5"/></svg>Profile</span>
                                     </div>
                                 </div>
                             </div>
