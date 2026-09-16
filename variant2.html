@@ -407,34 +407,34 @@
             transform: translateY(-4px) scale(1.01);
         }
 
-        /* Atoks Floating Transaction Cards */
+        /* Atoks Floating Prediction Cards */
         .atoks-floating-card {
             position: absolute;
             z-index: 4;
             background: #FFFFFF;
             border-radius: 20px;
-            padding: 14px 20px;
+            padding: 13px 18px;
             display: flex;
             align-items: center;
-            gap: 14px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07), 0 1px 4px rgba(0, 0, 0, 0.04);
-            border: 1px solid rgba(10, 37, 64, 0.06);
-            width: 310px;
+            gap: 13px;
+            box-shadow: 0 12px 34px rgba(10, 37, 64, 0.08), 0 2px 6px rgba(10, 37, 64, 0.04);
+            border: 1px solid rgba(10, 37, 64, 0.08);
+            width: 335px;
             box-sizing: border-box;
             transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
         }
         .atoks-floating-card:hover {
             transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 18px 44px rgba(10, 37, 64, 0.12), 0 3px 8px rgba(10, 37, 64, 0.05);
         }
 
         .atoks-card-left {
-            left: max(10px, calc(50% - 470px));
+            left: max(10px, calc(50% - 485px));
             top: 210px;
             animation: floatLeft 6s ease-in-out infinite alternate;
         }
         .atoks-card-right {
-            right: max(10px, calc(50% - 470px));
+            right: max(10px, calc(50% - 485px));
             top: 310px;
             animation: floatRight 6s ease-in-out infinite alternate;
         }
@@ -448,14 +448,17 @@
         }
 
         .atoks-card-icon {
-            width: 46px;
-            height: 46px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
+            background: #F6F8FC;
+            border: 1px solid rgba(10, 37, 64, 0.08);
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
             overflow: hidden;
+            padding: 7px;
         }
         .atoks-card-icon img {
             width: 100%;
@@ -470,16 +473,22 @@
             text-align: left;
         }
         .atoks-card-title {
-            font-size: 15px;
+            font-size: 14.5px;
             font-weight: 700;
             color: #0A2540;
             line-height: 1.25;
             margin-bottom: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         .atoks-card-sub {
             font-size: 12px;
             color: #687385;
             line-height: 1.2;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .atoks-card-meta {
@@ -487,16 +496,49 @@
             flex-shrink: 0;
         }
         .atoks-card-price {
-            font-size: 15px;
-            font-weight: 700;
+            font-size: 14.5px;
+            font-weight: 800;
             color: #0A2540;
             line-height: 1.25;
             margin-bottom: 2px;
         }
+        .atoks-card-price.text-win {
+            color: #00875A;
+        }
+        .atoks-card-price.text-live {
+            color: #635BFF;
+        }
         .atoks-card-date {
-            font-size: 12px;
+            font-size: 11.5px;
             color: #687385;
             line-height: 1.2;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 4px;
+        }
+        .atoks-card-date.status-win {
+            color: #00875A;
+            font-weight: 600;
+        }
+        .atoks-card-date.status-live {
+            color: #635BFF;
+            font-weight: 600;
+        }
+        .atoks-card-date svg {
+            width: 11px;
+            height: 11px;
+            flex-shrink: 0;
+        }
+        .status-live-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #635BFF;
+            box-shadow: 0 0 0 2px rgba(99, 91, 255, 0.25);
+            display: inline-block;
+            flex-shrink: 0;
+            animation: pulseDot 2s infinite ease-in-out;
         }
 
         /* 3D Shapes */
@@ -1263,15 +1305,16 @@
                 height: 440px;
             }
             .atoks-floating-card {
-                width: 250px;
-                padding: 10px 14px;
+                width: 275px;
+                padding: 11px 14px;
             }
             .atoks-card-icon {
                 width: 38px;
                 height: 38px;
+                padding: 5px;
             }
-            .atoks-card-title, .atoks-card-price { font-size: 13.5px; }
-            .atoks-card-sub, .atoks-card-date { font-size: 11px; }
+            .atoks-card-title, .atoks-card-price { font-size: 13px; }
+            .atoks-card-sub, .atoks-card-date { font-size: 10.5px; }
             .atoks-card-left {
                 left: 10px;
                 top: 170px;
@@ -1396,18 +1439,21 @@
                     <img class="shape-ball-float" src="./assets/img/shape-ball.webp" alt="">
                     <img class="shape-bolt-float" src="./assets/img/shape-bolt.webp" alt="">
 
-                    <!-- Left Floating Card: Apple Subscriptions -->
+                    <!-- Left Floating Prediction Card: Real Madrid vs Bayern (Verified Win) -->
                     <div class="atoks-floating-card atoks-card-left">
                         <div class="atoks-card-icon">
-                            <img src="./assets/img/apple-icon.svg" alt="Apple">
+                            <img src="./assets/img/leagues/champions-league.png" alt="Champions League">
                         </div>
                         <div class="atoks-card-info">
-                            <div class="atoks-card-title">Apple</div>
-                            <div class="atoks-card-sub">Subscriptions</div>
+                            <div class="atoks-card-title">Real Madrid vs Bayern</div>
+                            <div class="atoks-card-sub">Champions League · Over 2.5</div>
                         </div>
                         <div class="atoks-card-meta">
-                            <div class="atoks-card-price">$5.99</div>
-                            <div class="atoks-card-date">20 Jan 2025</div>
+                            <div class="atoks-card-price text-win">+€1,840.00</div>
+                            <div class="atoks-card-date status-win">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                                <span>Verified Win</span>
+                            </div>
                         </div>
                     </div>
 
@@ -1416,18 +1462,21 @@
                         <img class="hero-phone-img" src="./assets/img/hero-phone-atoks.png" alt="Betsmart App Preview">
                     </div>
 
-                    <!-- Right Floating Card: Spotify Subscriptions -->
+                    <!-- Right Floating Prediction Card: Arsenal vs Chelsea (Today's Value Bet) -->
                     <div class="atoks-floating-card atoks-card-right">
                         <div class="atoks-card-icon">
-                            <img src="./assets/img/spotify-icon.svg" alt="Spotify">
+                            <img src="./assets/img/leagues/premier-league.png" alt="Premier League">
                         </div>
                         <div class="atoks-card-info">
-                            <div class="atoks-card-title">Spotify</div>
-                            <div class="atoks-card-sub">Subscriptions</div>
+                            <div class="atoks-card-title">Arsenal vs Chelsea</div>
+                            <div class="atoks-card-sub">Premier League · Both To Score</div>
                         </div>
                         <div class="atoks-card-meta">
-                            <div class="atoks-card-price">$8.99</div>
-                            <div class="atoks-card-date">21 Jan 2025</div>
+                            <div class="atoks-card-price text-live">Odd 2.15</div>
+                            <div class="atoks-card-date status-live">
+                                <span class="status-live-dot"></span>
+                                <span>Today's Edge</span>
+                            </div>
                         </div>
                     </div>
                 </div>
