@@ -618,12 +618,13 @@
             animation-play-state: paused;
         }
         .league-track img {
-            height: 44px;
+            height: 56px;
+            max-height: 58px;
             width: auto;
             object-fit: contain;
-            margin: 0 clamp(24px, 3.5vw, 44px);
+            margin: 0 clamp(26px, 3.8vw, 48px);
             filter: grayscale(100%);
-            opacity: 0.65;
+            opacity: 0.75;
             transition: filter .28s ease, opacity .28s ease, transform .28s ease;
             user-select: none;
             -webkit-user-drag: none;
@@ -1348,6 +1349,7 @@
                 flex-direction: column;
             }
             .proof-track img { height: 200px; }
+            .league-track img { height: 46px; margin: 0 22px; }
             .review-card { width: 290px; }
         }
     </style>
